@@ -1,0 +1,51 @@
+/* score.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+header {
+    margin: 20px;
+}
+
+#jeu-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#score {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#score div {
+    width: 200px;
+}
+
+#score p {
+    font-size: 20px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff6f00;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #ff8f1a;
+}
+
+#changement {
+    margin-top: 20px;
+}
