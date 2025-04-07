@@ -10,20 +10,27 @@
     <div class="container">
         <h1>Score Tennis</h1>
 
-        <!-- Section du score du jeu -->
+        <!-- Section pour afficher le score de chaque joueur -->
         <div id="score">
-            <p>Joueur 1: <span id="scoreJ1">0</span></p>
-            <p>Joueur 2: <span id="scoreJ2">0</span></p>
+            <p>Jeu de Joueur 1: <span id="jeuJ1">0</span></p>
+            <p>Jeu de Joueur 2: <span id="jeuJ2">0</span></p>
+            <p>Points Joueur 1: <span id="scoreJ1">0</span></p>
+            <p>Points Joueur 2: <span id="scoreJ2">0</span></p>
         </div>
 
-        <!-- Un bouton pour commencer une nouvelle partie -->
+        <!-- Affichage du serveur actuel -->
+        <div id="serveur">
+            <p id="serveurStatus">Joueur 1 sert <span id="serveurPoint">●</span></p>
+        </div>
+
+        <!-- Un bouton pour commencer un nouveau jeu -->
         <button id="startGame">Commencer un nouveau jeu</button>
 
         <!-- Retour au menu -->
         <a href="index.html">Retour au menu</a>
     </div>
 
-    <!-- Lien vers le fichier JavaScript qui contient la logique du jeu -->
+    <!-- Lien vers le fichier JavaScript -->
     <script src="game.js"></script>
 </body>
 </html>
