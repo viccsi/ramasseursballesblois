@@ -1,51 +1,65 @@
 /* score.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-header {
-    margin: 20px;
-}
-
-#jeu-container {
-    background-color: white;
-    border-radius: 10px;
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#score {
-    display: flex;
-    justify-content: space-around;
+h1 {
+    color: #ff4500;  /* Orange foncé */
+    font-size: 36px;
     margin-bottom: 20px;
 }
 
-#score div {
-    width: 200px;
+#score {
+    font-size: 24px;
+    margin: 20px 0;
 }
 
-#score p {
+#serveur {
     font-size: 20px;
-    margin: 5px;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 button {
     padding: 10px 20px;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    background-color: #ff6f00;
+    background-color: #ff4500;
     color: white;
-    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-    background-color: #ff8f1a;
+    background-color: #e43f00;
 }
 
-#changement {
+a {
+    display: block;
     margin-top: 20px;
+    font-size: 16px;
+    color: #ff4500;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#serveurPoint {
+    color: yellow;
+    font-weight: bold;
+    font-size: 20px;
 }
