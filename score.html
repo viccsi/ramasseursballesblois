@@ -3,40 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de Tennis</title>
+    <title>Score Tennis</title>
     <link rel="stylesheet" href="score.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Score Tennis</h1>
 
-    <header>
-        <h1>Jeu de Tennis</h1>
-        <p>Score actuel</p>
-    </header>
-
-    <section id="jeu-container">
+        <!-- Section du score du jeu -->
         <div id="score">
-            <div id="score-J1">
-                <p>Joueur 1</p>
-                <p id="score-J1-pt">0</p>
-                <p id="score-J1-game">0</p>
-            </div>
-            <div id="score-J2">
-                <p>Joueur 2</p>
-                <p id="score-J2-pt">0</p>
-                <p id="score-J2-game">0</p>
-            </div>
+            <p>Joueur 1: <span id="scoreJ1">0</span></p>
+            <p>Joueur 2: <span id="scoreJ2">0</span></p>
         </div>
 
-        <button id="marquer-point">Marquer un point</button>
-        <button id="reset">Réinitialiser</button>
+        <!-- Un bouton pour commencer une nouvelle partie -->
+        <button id="startGame">Commencer un nouveau jeu</button>
 
-        <div id="changement">
-            <p id="serveur-info">Le serveur actuel : Joueur 1</p>
-            <p id="changement-cote">Changement de côté : Non</p>
-        </div>
-    </section>
+        <!-- Retour au menu -->
+        <a href="index.html">Retour au menu</a>
+    </div>
 
+    <!-- Lien vers le fichier JavaScript qui contient la logique du jeu -->
     <script src="game.js"></script>
 </body>
 </html>
-
