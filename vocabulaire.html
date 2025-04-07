@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Vocabulaire du Tennis</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .vocab-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
 
+    .mot {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .mot img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .mot h2 {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+
+    .mot p {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📖 Vocabulaire du Tennis</h1>
+    <p>Découvre les mots essentiels avec des images</p>
+  </header>
+
+  <main class="vocab-list">
+
+    <div class="mot">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Tennis_Racket_and_Balls.jpg" alt="Raquette de tennis">
+      <h2>Raquette</h2>
+      <p>Outil utilisé par les joueurs pour frapper la balle. Elle est composée d’un cadre et de cordes.</p>
+    </div>
+
+    <div class="mot">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Tennis_ball_closeup.jpg" alt="Balle de tennis">
+      <h2>Balle</h2>
+      <p>Objet rond et jaune utilisé pendant les échanges. Elle est en caoutchouc recouverte de feutre.</p>
+    </div>
+
+    <div class="mot">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Tennis_court_background.jpg" alt="Court de tennis">
+      <h2>Court</h2>
+      <p>Surface sur laquelle se déroule le match. Elle peut être en terre battue, en dur, en gazon ou moquette.</p>
+    </div>
+
+  </main>
+</body>
+</html>
