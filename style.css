@@ -16,37 +16,39 @@ body {
 header {
   text-align: center;
   padding: 1rem 0;
-  background-color: #ff7043; /* Orange foncé */
+  background-color: #ff7043;
   color: white;
 }
 
 h1 {
   font-size: 2.5rem;
+  margin: 0;
 }
 
-/* MENU vertical avec gros boutons */
+/* MENU vertical avec gros boutons identiques */
 .menu {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
-  gap: 20px;
+  margin-top: 40px;
+  gap: 25px;
+  margin-bottom: 60px; /* Espace après le dernier bouton */
 }
 
 .menu a {
-  font-size: 1.5rem;
-  padding: 20px 40px;
+  font-size: 1.8rem;
+  padding: 25px 0;
   background-color: #ff7043;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none;
-  width: 250px;
+  width: 300px;
   text-align: center;
   transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .menu a:hover {
   background-color: #e64a19;
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
-
