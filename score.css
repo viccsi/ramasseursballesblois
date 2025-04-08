@@ -1,65 +1,84 @@
-/* score.css */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+  background-color: #88361c;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
 }
 
-h1 {
-    color: #ff4500;  /* Orange foncé */
-    font-size: 36px;
-    margin-bottom: 20px;
+.titre {
+  margin-bottom: 2rem;
 }
 
-#score {
-    font-size: 24px;
-    margin: 20px 0;
+.scoreboard {
+  background: #71564d;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
-#serveur {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #333;
+.player {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+}
+
+.score-jeu, .sep {
+  display: inline-block;
+  font-size: 3rem;
+  margin: 0 0.5rem;
+}
+
+.points {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
+.serve-indicator {
+  position: absolute;
+  top: 10px;
+  font-size: 1.2rem;
+  color: yellow;
+}
+
+#serveJ1 {
+  left: 10px;
+}
+
+#serveJ2 {
+  right: 10px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 0.7rem 1.5rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffc107;
+  color: #333;
+  cursor: pointer;
 }
 
-button:hover {
-    background-color: #e43f00;
+.formulaire {
+  margin-top: 2rem;
+  text-align: left;
 }
 
-a {
-    display: block;
-    margin-top: 20px;
-    font-size: 16px;
-    color: #ff4500;
-    text-decoration: none;
+.formulaire label {
+  display: block;
+  margin: 0.5rem 0;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-#serveurPoint {
-    color: yellow;
-    font-weight: bold;
-    font-size: 20px;
+.resultat {
+  margin-top: 1rem;
+  font-weight: bold;
 }
