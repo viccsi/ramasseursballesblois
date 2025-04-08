@@ -50,6 +50,7 @@ function genererScore() {
 }
 
 function calculerSolution() {
+  
   let tempPtsJ1 = ptsJ1;
   let tempPtsJ2 = ptsJ2;
   let tempJeuJ1 = jeuJ1;
@@ -84,23 +85,24 @@ function calculerSolution() {
     tempStatut = 0;
   }
 
-  if (tempPtsJ1 === 4 && tempPtsJ2 === 4) {
+  // Passage à égalité si un joueur avait l'avantage et l'autre marque
+  if (tempPtsJ1 === 5 && tempPtsJ2 === 5) {
     tempPtsJ1 = 3;
     tempPtsJ2 = 3;
   }
-
   if (tempStatut === 0) {
     serveurApresPoint = tempServeur === 1 ? 2 : 1;
     if ((tempJeuJ1 + tempJeuJ2) % 2 === 1) {
       tempSolCote = 1;
     }
   }
-
+  
+  // Appliquer les solutions
   soljeuJ1 = tempJeuJ1;
   soljeuJ2 = tempJeuJ2;
   solptsJ1 = tempPtsJ1;
   solptsJ2 = tempPtsJ2;
-  solServ = serveurApresPoint;
+  solServ = tempStatut === 0 ? serveurApresPoint : tempServeur;
   solCote = tempSolCote;
 }
 
