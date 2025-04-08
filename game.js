@@ -30,7 +30,13 @@ function genererScore() {
 
   // Génération des points initiaux
   ptsJ1 = Math.floor(Math.random() * 6);
-  ptsJ2 = (ptsJ1 === 4) ? 5 : (ptsJ1 === 5 ? 4 : Math.floor(Math.random() * 6));
+  if (ptsJ1 === 4) {
+    ptsJ2 = 5;
+  } else if (ptsJ1 === 5) {
+    ptsJ2 = 4;
+  } else {
+    ptsJ2 = Math.floor(Math.random() * 4);
+  }
 
   // Sélection du joueur qui va marquer le point
   joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
@@ -50,31 +56,23 @@ function resolveScore() {
   if (ptsJ1 === 4 && ptsJ2 <= 2) {
     jeuJ1++;
     statut = 0;
-    ptsJ1 = 0;
-    ptsJ2 = 0;
   } else if (ptsJ1 > 5) {
     jeuJ1++;
     statut = 0;
-    ptsJ1 = 0;
-    ptsJ2 = 0;
   } else if (ptsJ2 === 4 && ptsJ1 <= 2) {
     jeuJ2++;
     statut = 0;
-    ptsJ1 = 0;
-    ptsJ2 = 0;
   } else if (ptsJ2 > 5) {
     jeuJ2++;
     statut = 0;
-    ptsJ1 = 0;
-    ptsJ2 = 0;
   } else if (ptsJ1 === 4 && ptsJ2 === 4) {
-    ptsJ1 = 3;
-    ptsJ2 = 3;
+    solptsJ1 = 3;
+    solptsJ2 = 3;
   }
   else
   {
-    ptsJ1++;
-    ptsJ2++;
+    solptsJ1 = ptsJ1;
+    solptsJ2 = ptsJ2;
   }
 
   if (statut === 0) {
