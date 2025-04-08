@@ -3,6 +3,8 @@ let jeuJ2 = 0;
 let ptsJ1 = 0;
 let ptsJ2 = 0;
 let serveur = 1;
+let solptsJ1 = 0;
+let solptsj2 = 0;
 let solCote = 0;
 let solServ = 0;
 let joueurQuiMarque = 1;
@@ -105,7 +107,7 @@ function verifierReponse() {
   let msg = "";
 
   // Vérif score
-  if (repJeuJ1 === jeuJ1 && repJeuJ2 === jeuJ2 && repPtsJ1 === ptsJ1 && repPtsJ2 === ptsJ2) {
+  if (repJeuJ1 === soljeuJ1 && repJeuJ2 === soljeuJ2 && repPtsJ1 === solptsJ1 && repPtsJ2 === solptsJ2) {
     msg += "✅ Score juste<br>";
   } else {
     msg += "❌ Score incorrect<br>";
