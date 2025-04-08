@@ -1,128 +1,127 @@
-let sol = {
-  jeuJ1: 0,
-  jeuJ2: 0,
-  ptsJ1: 0,
-  ptsJ2: 0,
-  serveur: 1,
-  joueurQuiMarque: 1 // 1 ou 2
-};
+let jeuJ1 = 0;
+let jeuJ2 = 0;
+let ptsJ1 = 0;
+let ptsJ2 = 0;
+let serveur = 1;
+let solCote = 0;
+let solServ = 0;
+let joueurQuiMarque = 1;
+let statut = 1;
+
+function afficherScore(pts) {
+  switch (pts) {
+    case 0: return "0";
+    case 1: return "15";
+    case 2: return "30";
+    case 3: return "40";
+    case 4: return "/";
+    case 5: return "AD";
+    default: return "?";
+  }
+}
 
 function genererScore() {
-  // Score de départ (état avant le point)
-  sol.jeuJ1 = Math.floor(Math.random() * 4);
-  sol.jeuJ2 = Math.floor(Math.random() * 4);
-  sol.ptsJ1 = Math.floor(Math.random() * 4);
-  sol.ptsJ2 = Math.floor(Math.random() * 4);
+  jeuJ1 = Math.floor(Math.random() * 5);
+  jeuJ2 = Math.floor(Math.random() * 3);
+  serveur = Math.random() < 0.5 ? 1 : 2;
+  solServ = 0;
+  solCote = 0;
+  statut = 1;
 
-  // Gestion du cas d'avantage
-  if (sol.ptsJ1 === 3 && sol.ptsJ2 === 3) {
-    if (Math.random() < 0.5) {
-      sol.ptsJ1 = 4;
-      sol.ptsJ2 = 3;
-    } else {
-      sol.ptsJ1 = 3;
-      sol.ptsJ2 = 4;
-    }
+  // Génération des points initiaux
+  ptsJ1 = Math.floor(Math.random() * 6);
+  ptsJ2 = (ptsJ1 === 4) ? 5 : (ptsJ1 === 5 ? 4 : Math.floor(Math.random() * 6));
+
+  // Sélection du joueur qui va marquer le point
+  joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
+  document.getElementById("question").innerText = `Quel sera le score si le Joueur ${joueurQuiMarque} marque le point ?`;
+
+  // Le joueur marque le point
+  if (joueurQuiMarque === 1) ptsJ1++;
+  else ptsJ2++;
+
+  // Résolution du score
+  resolveScore();
+
+  // Mise à jour UI
+  majInterface();
+}
+
+function resolveScore() {
+  if (ptsJ1 === 4 && ptsJ2 <= 2) {
+    jeuJ1++;
+    statut = 0;
+    ptsJ1 = 0;
+    ptsJ2 = 0;
+  } else if (ptsJ1 > 5) {
+    jeuJ1++;
+    statut = 0;
+    ptsJ1 = 0;
+    ptsJ2 = 0;
+  } else if (ptsJ2 === 4 && ptsJ1 <= 2) {
+    jeuJ2++;
+    statut = 0;
+    ptsJ1 = 0;
+    ptsJ2 = 0;
+  } else if (ptsJ2 > 5) {
+    jeuJ2++;
+    statut = 0;
+    ptsJ1 = 0;
+    ptsJ2 = 0;
+  } else if (ptsJ1 === 4 && ptsJ2 === 4) {
+    ptsJ1 = 3;
+    ptsJ2 = 3;
   }
 
-  sol.serveur = Math.random() < 0.5 ? 1 : 2;
-  sol.joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
-
-  // Affichage de la situation actuelle
-  afficherScore();
-
-  // Affiche la question
-  document.getElementById("question").textContent = `Quel sera le score si le Joueur ${sol.joueurQuiMarque} marque le point ?`;
-
-  // Calculer l’état après point
-  calculerReponse();
-}
-
-let solution = {};
-
-function calculerReponse() {
-  // On part d'une copie de l'état initial
-  let j1 = sol.ptsJ1;
-  let j2 = sol.ptsJ2;
-  let jeuJ1 = sol.jeuJ1;
-  let jeuJ2 = sol.jeuJ2;
-
-  if (sol.joueurQuiMarque === 1) {
-    // J1 marque
-    if (j1 === 3 && j2 < 3) {
-      jeuJ1++;
-      j1 = 0;
-      j2 = 0;
-    } else if (j1 === 4) {
-      jeuJ1++;
-      j1 = 0;
-      j2 = 0;
-    } else if (j1 === 3 && j2 === 3) {
-      j1 = 4; // AD
-    } else if (j1 === 3 && j2 === 4) {
-      j1 = 3;
-      j2 = 3;
-    } else {
-      j1++;
+  if (statut === 0) {
+    serveur = serveur === 1 ? 2 : 1;
+    solServ = 1;
+    if ((jeuJ1 + jeuJ2) % 2 === 1) {
+      solCote = 1;
     }
-  } else {
-    // J2 marque
-    if (j2 === 3 && j1 < 3) {
-      jeuJ2++;
-      j1 = 0;
-      j2 = 0;
-    } else if (j2 === 4) {
-      jeuJ2++;
-      j1 = 0;
-      j2 = 0;
-    } else if (j1 === 3 && j2 === 3) {
-      j2 = 4; // AD
-    } else if (j2 === 3 && j1 === 4) {
-      j1 = 3;
-      j2 = 3;
-    } else {
-      j2++;
-    }
+    statut = 1;
   }
-
-  solution = {
-    jeuJ1,
-    jeuJ2,
-    ptsJ1: j1,
-    ptsJ2: j2,
-    serveur: sol.serveur
-  };
 }
 
-function afficherScore() {
-  document.getElementById("jeuJ1").textContent = sol.jeuJ1;
-  document.getElementById("jeuJ2").textContent = sol.jeuJ2;
-  document.getElementById("ptsJ1").textContent = afficherPts(sol.ptsJ1);
-  document.getElementById("ptsJ2").textContent = afficherPts(sol.ptsJ2);
-  document.getElementById("serveur").textContent = sol.serveur === 1 ? "J1" : "J2";
-}
-
-function afficherPts(val) {
-  return ["0", "15", "30", "40", "AD"][val] || "0";
+function majInterface() {
+  document.getElementById("jeuJ1").innerText = jeuJ1;
+  document.getElementById("jeuJ2").innerText = jeuJ2;
+  document.getElementById("ptsJ1").innerText = afficherScore(ptsJ1);
+  document.getElementById("ptsJ2").innerText = afficherScore(ptsJ2);
+  document.getElementById("serve1").style.display = serveur === 1 ? "inline-block" : "none";
+  document.getElementById("serve2").style.display = serveur === 2 ? "inline-block" : "none";
 }
 
 function verifierReponse() {
-  const rj1 = parseInt(document.getElementById("rep_jeu_j1").value);
-  const rj2 = parseInt(document.getElementById("rep_jeu_j2").value);
-  const rp1 = parseInt(document.getElementById("rep_pts_j1").value);
-  const rp2 = parseInt(document.getElementById("rep_pts_j2").value);
-  const rs = parseInt(document.getElementById("rep_serv").value);
+  let repJeuJ1 = parseInt(document.getElementById("repJeuJ1").value);
+  let repJeuJ2 = parseInt(document.getElementById("repJeuJ2").value);
+  let repPtsJ1 = parseInt(document.getElementById("repPtsJ1").value);
+  let repPtsJ2 = parseInt(document.getElementById("repPtsJ2").value);
+  let repServ = document.getElementById("repServ").value;
+  let repCote = document.getElementById("repCote").value;
 
-  let res = [];
+  let msg = "";
 
-  if (rj1 === solution.jeuJ1 && rj2 === solution.jeuJ2) res.push("✅ Jeux corrects");
-  else res.push("❌ Jeux incorrects");
+  // Vérif score
+  if (repJeuJ1 === jeuJ1 && repJeuJ2 === jeuJ2 && repPtsJ1 === ptsJ1 && repPtsJ2 === ptsJ2) {
+    msg += "✅ Score juste<br>";
+  } else {
+    msg += "❌ Score incorrect<br>";
+  }
 
-  if (rp1 === solution.ptsJ1 && rp2 === solution.ptsJ2) res.push("✅ Points corrects");
-  else res.push("❌ Points incorrects");
+  // Vérif serveur
+  if ((repServ === "non" && solServ === 0) || (repServ === "oui" && solServ === 1)) {
+    msg += "✅ Serveur correct<br>";
+  } else {
+    msg += "❌ Erreur serveur<br>";
+  }
 
-  if (rs === solution.serveur) res.push("✅ Serveur correct");
-  else res.push("❌ Serveur incorrect");
+  // Vérif côté
+  if ((repCote === "non" && solCote === 0) || (repCote === "oui" && solCote === 1)) {
+    msg += "✅ Côté correct<br>";
+  } else {
+    msg += "❌ Erreur côté<br>";
+  }
 
-  document.getElementById("resultat").innerHTML = res.join("<br>");
+  document.getElementById("resultat").innerHTML = msg;
 }
