@@ -8,36 +8,42 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="titre">SCORE TENNIS</h1>
+    <h1>Score de Tennis</h1>
 
-    <div class="scoreboard">
-      <div class="player">JOUEUR 1</div>
-      <div class="score-jeu" id="jeuJ1">0</div>
-      <div class="sep">-</div>
-      <div class="score-jeu" id="jeuJ2">0</div>
-      <div class="player">JOUEUR 2</div>
-
-      <div class="points" id="points">0 - 0</div>
-      <div class="serve-indicator" id="serveJ1">●</div>
-      <div class="serve-indicator" id="serveJ2">●</div>
+    <div class="score-board">
+      <div class="ligne">
+        <span>Jeux J1 :</span><span id="jeuJ1">0</span>
+        <span> | </span>
+        <span>Jeux J2 :</span><span id="jeuJ2">0</span>
+      </div>
+      <div class="ligne">
+        <span>Points J1 :</span><span id="ptsJ1">0</span>
+        <span> | </span>
+        <span>Points J2 :</span><span id="ptsJ2">0</span>
+      </div>
+      <div class="ligne">
+        <span>Serveur :</span><span id="serveur">J1</span>
+      </div>
     </div>
 
-    <div class="log" id="logText">Cliquez pour commencer un nouveau point.</div>
-
-    <button onclick="nouveauPoint()">🎾 Nouveau point</button>
+    <button onclick="genererScore()">🎲 Générer un score</button>
 
     <div class="formulaire">
-      <p>Quel est le score suivant ?</p>
-      <label>Jeux J1: <input type="number" id="rep_jeu_j1" min="0" max="5"></label>
-      <label>Jeux J2: <input type="number" id="rep_jeu_j2" min="0" max="5"></label>
-      <label>Points J1 (0/1/2/3/4/5): <input type="number" id="rep_pts_j1" min="0" max="5"></label>
-      <label>Points J2 (0/1/2/3/4/5): <input type="number" id="rep_pts_j2" min="0" max="5"></label>
-      <label>Changement de serveur ? <input type="text" id="rep_serv" placeholder="oui ou non"></label>
-      <label>Changement de côté ? <input type="text" id="rep_cote" placeholder="oui ou non"></label>
-      <button onclick="verifierReponses()">✅ Vérifier</button>
+      <h2>Quel est le score affiché ?</h2>
+      <label>Jeux J1: <input type="number" id="rep_jeu_j1"></label>
+      <label>Jeux J2: <input type="number" id="rep_jeu_j2"></label>
+      <label>Points J1: <input type="number" id="rep_pts_j1"></label>
+      <label>Points J2: <input type="number" id="rep_pts_j2"></label>
+      <label>Serveur: 
+        <select id="rep_serv">
+          <option value="1">Joueur 1</option>
+          <option value="2">Joueur 2</option>
+        </select>
+      </label>
+      <button onclick="verifierReponse()">✅ Vérifier</button>
     </div>
 
-    <div class="resultat" id="resultat"></div>
+    <div id="resultat" class="resultat"></div>
   </div>
 
   <script src="game.js"></script>
