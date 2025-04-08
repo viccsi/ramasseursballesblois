@@ -2,11 +2,13 @@ let jeuJ1 = 0;
 let jeuJ2 = 0;
 let ptsJ1 = 0;
 let ptsJ2 = 0;
-let serveur = 1;
+let soljeuJ1 = 0;
+let soljeuJ2 = 0;
 let solptsJ1 = 0;
-let solptsj2 = 0;
-let solCote = 0;
+let solptsJ2 = 0;
+let serveur = 1;
 let solServ = 0;
+let solCote = 0;
 let joueurQuiMarque = 1;
 let statut = 1;
 
@@ -30,7 +32,6 @@ function genererScore() {
   solCote = 0;
   statut = 1;
 
-  // Génération des points initiaux
   ptsJ1 = Math.floor(Math.random() * 6);
   if (ptsJ1 === 4) {
     ptsJ2 = 5;
@@ -40,21 +41,17 @@ function genererScore() {
     ptsJ2 = Math.floor(Math.random() * 4);
   }
 
-  // Sélection du joueur qui va marquer le point
   joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
   document.getElementById("question").innerText = `Quel sera le score si le Joueur ${joueurQuiMarque} marque le point ?`;
-  
-  // Mise à jour UI
+
+  resolveScore();
   majInterface();
 }
 
 function resolveScore() {
-  // Le joueur marque le point
   if (joueurQuiMarque === 1) ptsJ1++;
   else ptsJ2++;
 
-  // Résolution du score
-  resolveScore();
   if (ptsJ1 === 4 && ptsJ2 <= 2) {
     jeuJ1++;
     statut = 0;
@@ -68,14 +65,14 @@ function resolveScore() {
     jeuJ2++;
     statut = 0;
   } else if (ptsJ1 === 4 && ptsJ2 === 4) {
-    solptsJ1 = 3;
-    solptsJ2 = 3;
+    ptsJ1 = 3;
+    ptsJ2 = 3;
   }
-  else
-  {
-    solptsJ1 = ptsJ1;
-    solptsJ2 = ptsJ2;
-  }
+
+  soljeuJ1 = jeuJ1;
+  soljeuJ2 = jeuJ2;
+  solptsJ1 = ptsJ1;
+  solptsJ2 = ptsJ2;
 
   if (statut === 0) {
     serveur = serveur === 1 ? 2 : 1;
@@ -106,21 +103,18 @@ function verifierReponse() {
 
   let msg = "";
 
-  // Vérif score
   if (repJeuJ1 === soljeuJ1 && repJeuJ2 === soljeuJ2 && repPtsJ1 === solptsJ1 && repPtsJ2 === solptsJ2) {
     msg += "✅ Score juste<br>";
   } else {
     msg += "❌ Score incorrect<br>";
   }
 
-  // Vérif serveur
   if ((repServ === "non" && solServ === 0) || (repServ === "oui" && solServ === 1)) {
     msg += "✅ Serveur correct<br>";
   } else {
     msg += "❌ Erreur serveur<br>";
   }
 
-  // Vérif côté
   if ((repCote === "non" && solCote === 0) || (repCote === "oui" && solCote === 1)) {
     msg += "✅ Côté correct<br>";
   } else {
