@@ -138,8 +138,7 @@ function verifierReponse() {
     msg += `❌ Score incorrect<br>`;
     msg += `Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
   }
-
-  if ((repServ === "non" && solServ === 0) || (repServ === "oui" && solServ === 1)) {
+  if (parseInt(repServ) === serveur) {
     msg += "✅ Serveur correct<br>";
   } else {
     msg += "❌ Erreur serveur<br>";
