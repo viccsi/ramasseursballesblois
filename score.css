@@ -1,76 +1,32 @@
 body {
-  background-color: #88361c;
-  color: white;
   font-family: Arial, sans-serif;
-  text-align: center;
+  background-color: #f6f6f6;
+  color: #333;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  max-width: 700px;
-  margin: auto;
+  max-width: 600px;
+  margin: 2rem auto;
+  background: white;
   padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.titre {
+h1, h2 {
+  text-align: center;
+}
+
+.score-board {
+  text-align: center;
+  font-size: 1.2rem;
   margin-bottom: 2rem;
 }
 
-.scoreboard {
-  background: #71564d;
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.player {
-  display: inline-block;
-  width: 100px;
-  font-weight: bold;
-}
-
-.score-jeu, .sep {
-  display: inline-block;
-  font-size: 3rem;
-  margin: 0 0.5rem;
-}
-
-.points {
-  font-size: 2rem;
-  margin-top: 1rem;
-}
-
-.serve-indicator {
-  position: absolute;
-  top: 10px;
-  font-size: 1.2rem;
-  color: yellow;
-}
-
-#serveJ1 {
-  left: 10px;
-}
-
-#serveJ2 {
-  right: 10px;
-}
-
-button {
-  padding: 0.7rem 1.5rem;
-  margin-top: 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #ffc107;
-  color: #333;
-  cursor: pointer;
-}
-
-.formulaire {
-  margin-top: 2rem;
-  text-align: left;
+.ligne {
+  margin: 0.5rem 0;
 }
 
 .formulaire label {
@@ -78,7 +34,28 @@ button {
   margin: 0.5rem 0;
 }
 
+input, select {
+  margin-left: 1rem;
+  padding: 0.3rem;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
 .resultat {
   margin-top: 1rem;
   font-weight: bold;
+  text-align: center;
 }
