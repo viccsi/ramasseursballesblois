@@ -43,7 +43,7 @@ function genererScore()
   }
   else
   {
-    ptsJ2 = Math.floor(Math.random() * 4));
+    ptsJ2 = Math.floor(Math.random() * 4);
   }
   
 
