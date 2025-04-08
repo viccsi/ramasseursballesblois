@@ -52,6 +52,7 @@ function genererScore() {
 }
 
 function calculerSolution() {
+  // Copie des scores et états actuels
   let tempPtsJ1 = ptsJ1;
   let tempPtsJ2 = ptsJ2;
   let tempJeuJ1 = jeuJ1;
@@ -61,9 +62,11 @@ function calculerSolution() {
   let tempSolServ = 0;
   let tempSolCote = 0;
 
+  // Le joueur marque le point
   if (joueurQuiMarque === 1) tempPtsJ1++;
   else tempPtsJ2++;
 
+  // Déroulement du jeu selon les règles
   if (tempPtsJ1 === 4 && tempPtsJ2 <= 2) {
     tempJeuJ1++;
     tempPtsJ1 = 0;
@@ -84,11 +87,15 @@ function calculerSolution() {
     tempPtsJ1 = 0;
     tempPtsJ2 = 0;
     tempStatut = 0;
-  } else if (tempPtsJ1 === 4 && tempPtsJ2 === 4) {
+  }
+
+  // Passage à égalité
+  if (tempPtsJ1 === 4 && tempPtsJ2 === 4) {
     tempPtsJ1 = 3;
     tempPtsJ2 = 3;
   }
 
+  // Changement de serveur ou de côté ?
   if (tempStatut === 0) {
     tempServeur = tempServeur === 1 ? 2 : 1;
     tempSolServ = 1;
@@ -97,6 +104,7 @@ function calculerSolution() {
     }
   }
 
+  // Stocker dans les vraies variables de solution
   soljeuJ1 = tempJeuJ1;
   soljeuJ2 = tempJeuJ2;
   solptsJ1 = tempPtsJ1;
