@@ -21,8 +21,8 @@ function afficherScore(pts) {
 }
 
 function genererScore() {
-  jeuJ1 = Math.floor(Math.random() * 6);
-  jeuJ2 = Math.floor(Math.random() * 6);
+  jeuJ1 = Math.floor(Math.random() * 5);
+  jeuJ2 = Math.floor(Math.random() * 3);
   serveur = Math.random() < 0.5 ? 1 : 2;
   solServ = 0;
   solCote = 0;
@@ -30,53 +30,51 @@ function genererScore() {
 
   // Génération des points initiaux
   ptsJ1 = Math.floor(Math.random() * 6);
-  if (ptsJ1 === 4) {
-    ptsJ2 = 5;
-  } else if (ptsJ1 === 5) {
-    ptsJ2 = 4;
-  } else {
-    ptsJ2 = Math.floor(Math.random() * 4);
-  }
+  ptsJ2 = (ptsJ1 === 4) ? 5 : (ptsJ1 === 5 ? 4 : Math.floor(Math.random() * 6));
 
   // Sélection du joueur qui va marquer le point
   joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
   document.getElementById("question").innerText = `Quel sera le score si le Joueur ${joueurQuiMarque} marque le point ?`;
+  
+  // Mise à jour UI
+  majInterface();
+}
 
+function resolveScore() {
   // Le joueur marque le point
   if (joueurQuiMarque === 1) ptsJ1++;
   else ptsJ2++;
 
   // Résolution du score
   resolveScore();
-
-  // Mise à jour de l'interface utilisateur
-  majInterface();
-}
-
-function resolveScore() {
-  if (ptsJ1 === 4 && ptsJ2 <= 2) { // Gestion jeu avant avantages J1
+  if (ptsJ1 === 4 && ptsJ2 <= 2) {
     jeuJ1++;
     statut = 0;
     ptsJ1 = 0;
     ptsJ2 = 0;
-  } else if (ptsJ1 > 5) { // Gestion jeu aux avantages J1
+  } else if (ptsJ1 > 5) {
     jeuJ1++;
     statut = 0;
     ptsJ1 = 0;
     ptsJ2 = 0;
-  } else if (ptsJ2 === 4 && ptsJ1 <= 2) { // Gestion jeu avant avantages J2
+  } else if (ptsJ2 === 4 && ptsJ1 <= 2) {
     jeuJ2++;
     statut = 0;
     ptsJ1 = 0;
     ptsJ2 = 0;
-  } else if (ptsJ2 > 5) { // Gestion jeu aux avantages J2
+  } else if (ptsJ2 > 5) {
     jeuJ2++;
     statut = 0;
     ptsJ1 = 0;
     ptsJ2 = 0;
-  } else if (ptsJ1 === 4 && ptsJ2 === 4) { // Gestion retour à 40-40
+  } else if (ptsJ1 === 4 && ptsJ2 === 4) {
     ptsJ1 = 3;
     ptsJ2 = 3;
+  }
+  else
+  {
+    ptsJ1++;
+    ptsJ2++;
   }
 
   if (statut === 0) {
@@ -108,21 +106,21 @@ function verifierReponse() {
 
   let msg = "";
 
-  // Vérification du score
+  // Vérif score
   if (repJeuJ1 === jeuJ1 && repJeuJ2 === jeuJ2 && repPtsJ1 === ptsJ1 && repPtsJ2 === ptsJ2) {
     msg += "✅ Score juste<br>";
   } else {
     msg += "❌ Score incorrect<br>";
   }
 
-  // Vérification du serveur
+  // Vérif serveur
   if ((repServ === "non" && solServ === 0) || (repServ === "oui" && solServ === 1)) {
     msg += "✅ Serveur correct<br>";
   } else {
     msg += "❌ Erreur serveur<br>";
   }
 
-  // Vérification du côté
+  // Vérif côté
   if ((repCote === "non" && solCote === 0) || (repCote === "oui" && solCote === 1)) {
     msg += "✅ Côté correct<br>";
   } else {
@@ -131,7 +129,3 @@ function verifierReponse() {
 
   document.getElementById("resultat").innerHTML = msg;
 }
-
-// Ajout d'événements aux boutons
-document.getElementById("genererBtn").addEventListener("click", genererScore);
-document.getElementById("verifierBtn").addEventListener("click", verifierReponse);
