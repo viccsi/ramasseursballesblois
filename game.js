@@ -6,13 +6,18 @@ let serveur = 1;
 let joueurQuiMarque = 1;
 let statut = 1;
 
-// Solutions à vérifier
 let soljeuJ1 = 0;
 let soljeuJ2 = 0;
 let solptsJ1 = 0;
 let solptsJ2 = 0;
-let solServ = 0; // maintenant : joueur qui sert (1 ou 2)
+let solServ = 0;
 let solCote = 0;
+
+// Séries
+let scoreActuel = 1;
+let scoreTotal = 5;
+let pointsTotal = 0;
+let enSerie = false;
 
 function afficherScore(pts) {
   switch (pts) {
@@ -26,10 +31,24 @@ function afficherScore(pts) {
   }
 }
 
+function updateCompteur() {
+  document.getElementById("compteurSerie").innerText = `Score ${scoreActuel} / ${scoreTotal}`;
+}
+
+function demarrerSerie() {
+  scoreActuel = 1;
+  pointsTotal = 0;
+  enSerie = true;
+  document.getElementById("btnSerie").disabled = true;
+  genererScore();
+  updateCompteur();
+}
+
 function genererScore() {
   jeuJ1 = Math.floor(Math.random() * 5);
   jeuJ2 = Math.floor(Math.random() * 3);
   serveur = Math.random() < 0.5 ? 1 : 2;
+  solServ = 0;
   solCote = 0;
   statut = 1;
 
@@ -50,59 +69,48 @@ function genererScore() {
 }
 
 function calculerSolution() {
-  
   let tempPtsJ1 = ptsJ1;
   let tempPtsJ2 = ptsJ2;
   let tempJeuJ1 = jeuJ1;
   let tempJeuJ2 = jeuJ2;
   let tempServeur = serveur;
   let tempStatut = 1;
+  let tempSolServ = 0;
   let tempSolCote = 0;
-  let serveurApresPoint = serveur;
 
   if (joueurQuiMarque === 1) tempPtsJ1++;
   else tempPtsJ2++;
 
   if (tempPtsJ1 === 4 && tempPtsJ2 <= 2) {
-    tempJeuJ1++;
-    tempPtsJ1 = 0;
-    tempPtsJ2 = 0;
-    tempStatut = 0;
+    tempJeuJ1++; tempPtsJ1 = 0; tempPtsJ2 = 0; tempStatut = 0;
   } else if (tempPtsJ1 > 5) {
-    tempJeuJ1++;
-    tempPtsJ1 = 0;
-    tempPtsJ2 = 0;
-    tempStatut = 0;
+    tempJeuJ1++; tempPtsJ1 = 0; tempPtsJ2 = 0; tempStatut = 0;
   } else if (tempPtsJ2 === 4 && tempPtsJ1 <= 2) {
-    tempJeuJ2++;
-    tempPtsJ1 = 0;
-    tempPtsJ2 = 0;
-    tempStatut = 0;
+    tempJeuJ2++; tempPtsJ1 = 0; tempPtsJ2 = 0; tempStatut = 0;
   } else if (tempPtsJ2 > 5) {
-    tempJeuJ2++;
-    tempPtsJ1 = 0;
-    tempPtsJ2 = 0;
-    tempStatut = 0;
+    tempJeuJ2++; tempPtsJ1 = 0; tempPtsJ2 = 0; tempStatut = 0;
   }
 
-  // Passage à égalité si un joueur avait l'avantage et l'autre marque
-  if (tempPtsJ1 === 5 && tempPtsJ2 === 5) {
+  if (tempPtsJ1 === 4 && tempPtsJ2 === 4) {
     tempPtsJ1 = 3;
     tempPtsJ2 = 3;
   }
+
   if (tempStatut === 0) {
-    serveurApresPoint = tempServeur === 1 ? 2 : 1;
+    tempServeur = tempServeur === 1 ? 2 : 1;
+    tempSolServ = tempServeur;
     if ((tempJeuJ1 + tempJeuJ2) % 2 === 1) {
       tempSolCote = 1;
     }
+  } else {
+    tempSolServ = serveur;
   }
-  
-  // Appliquer les solutions
+
   soljeuJ1 = tempJeuJ1;
   soljeuJ2 = tempJeuJ2;
   solptsJ1 = tempPtsJ1;
   solptsJ2 = tempPtsJ2;
-  solServ = tempStatut === 0 ? serveurApresPoint : tempServeur;
+  solServ = tempSolServ;
   solCote = tempSolCote;
 }
 
@@ -125,31 +133,37 @@ function verifierReponse() {
 
   let msg = "";
 
-  if (
-    repJeuJ1 === soljeuJ1 &&
-    repJeuJ2 === soljeuJ2 &&
-    repPtsJ1 === solptsJ1 &&
-    repPtsJ2 === solptsJ2
-  ) {
+  let scoreJuste = (repJeuJ1 === soljeuJ1 && repJeuJ2 === soljeuJ2 && repPtsJ1 === solptsJ1 && repPtsJ2 === solptsJ2);
+  let servJuste = (repServ === solServ);
+  let coteJuste = ((repCote === "non" && solCote === 0) || (repCote === "oui" && solCote === 1));
+
+  if (scoreJuste) {
     msg += "✅ Score juste<br>";
   } else {
-    msg += `❌ Score incorrect<br>`;
-    msg += `Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
+    msg += `❌ Score incorrect<br>Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
   }
 
-  if (repServ === solServ) {
-    msg += "✅ Serveur correct<br>";
-  } else {
-    msg += `❌ Erreur serveur – c'était le Joueur ${solServ}<br>`;
-  }
+  if (servJuste) msg += "✅ Serveur correct<br>";
+  else msg += "❌ Erreur serveur<br>";
 
-  if (
-    (repCote === "non" && solCote === 0) ||
-    (repCote === "oui" && solCote === 1)
-  ) {
-    msg += "✅ Côté correct<br>";
-  } else {
-    msg += "❌ Erreur côté<br>";
+  if (coteJuste) msg += "✅ Côté correct<br>";
+  else msg += "❌ Erreur côté<br>";
+
+  let pointsGagnes = (scoreJuste ? 1 : 0) + (servJuste ? 1 : 0) + (coteJuste ? 1 : 0);
+  pointsTotal += pointsGagnes;
+
+  if (enSerie) {
+    if (scoreActuel < scoreTotal) {
+      scoreActuel++;
+      genererScore();
+      updateCompteur();
+      msg += `<br>✅ ${pointsGagnes}/3 pour ce score.`;
+    } else {
+      enSerie = false;
+      msg += `<br><strong>🧮 Série terminée !</strong><br>`;
+      msg += `⭐️ Score final : ${pointsTotal} / 15<br>`;
+      document.getElementById("btnSerie").disabled = false;
+    }
   }
 
   document.getElementById("resultat").innerHTML = msg;
