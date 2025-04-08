@@ -15,7 +15,7 @@
     header {
       text-align: center;
       padding: 2rem 0;
-      background-color: #ff7043;
+      background-color: #ff7043; /* Orange foncé */
       color: white;
     }
 
@@ -133,8 +133,8 @@
   </header>
 
   <h1 id="question">Quel sera le score si le Joueur ... marque le point ?</h1>
-  <p id="compteurSerie"></p>
 
+  <!-- SCORE ACTUEL -->
   <div class="scoreboard">
     <div class="player">
       <div class="player-name"><span id="serve1" class="server-dot" style="display:none;"></span>Joueur 1</div>
@@ -148,6 +148,7 @@
     </div>
   </div>
 
+  <!-- SCORE À REMPLIR -->
   <div class="reponse-board">
     <div class="reponse-player">
       <div><strong>Joueur 1</strong></div>
@@ -198,7 +199,7 @@
   </div>
 
   <div>
-    <button id="btnSerie" onclick="demarrerSerie()">🚀 Commencer la série</button>
+    <button onclick="genererScore()">🎲 Générer un score</button>
     <button onclick="verifierReponse()">✅ Vérifier</button>
   </div>
 
