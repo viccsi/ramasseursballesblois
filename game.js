@@ -2,15 +2,17 @@ let jeuJ1 = 0;
 let jeuJ2 = 0;
 let ptsJ1 = 0;
 let ptsJ2 = 0;
+let serveur = 1;
+let joueurQuiMarque = 1;
+let statut = 1;
+
+// Solutions à vérifier
 let soljeuJ1 = 0;
 let soljeuJ2 = 0;
 let solptsJ1 = 0;
 let solptsJ2 = 0;
-let serveur = 1;
 let solServ = 0;
 let solCote = 0;
-let joueurQuiMarque = 1;
-let statut = 1;
 
 function afficherScore(pts) {
   switch (pts) {
@@ -32,6 +34,7 @@ function genererScore() {
   solCote = 0;
   statut = 1;
 
+  // Génération des points initiaux
   ptsJ1 = Math.floor(Math.random() * 6);
   if (ptsJ1 === 4) {
     ptsJ2 = 5;
@@ -44,44 +47,62 @@ function genererScore() {
   joueurQuiMarque = Math.random() < 0.5 ? 1 : 2;
   document.getElementById("question").innerText = `Quel sera le score si le Joueur ${joueurQuiMarque} marque le point ?`;
 
-  resolveScore();
+  calculerSolution();
   majInterface();
 }
 
-function resolveScore() {
-  if (joueurQuiMarque === 1) ptsJ1++;
-  else ptsJ2++;
+function calculerSolution() {
+  let tempPtsJ1 = ptsJ1;
+  let tempPtsJ2 = ptsJ2;
+  let tempJeuJ1 = jeuJ1;
+  let tempJeuJ2 = jeuJ2;
+  let tempServeur = serveur;
+  let tempStatut = 1;
+  let tempSolServ = 0;
+  let tempSolCote = 0;
 
-  if (ptsJ1 === 4 && ptsJ2 <= 2) {
-    jeuJ1++;
-    statut = 0;
-  } else if (ptsJ1 > 5) {
-    jeuJ1++;
-    statut = 0;
-  } else if (ptsJ2 === 4 && ptsJ1 <= 2) {
-    jeuJ2++;
-    statut = 0;
-  } else if (ptsJ2 > 5) {
-    jeuJ2++;
-    statut = 0;
-  } else if (ptsJ1 === 4 && ptsJ2 === 4) {
-    ptsJ1 = 3;
-    ptsJ2 = 3;
+  if (joueurQuiMarque === 1) tempPtsJ1++;
+  else tempPtsJ2++;
+
+  if (tempPtsJ1 === 4 && tempPtsJ2 <= 2) {
+    tempJeuJ1++;
+    tempPtsJ1 = 0;
+    tempPtsJ2 = 0;
+    tempStatut = 0;
+  } else if (tempPtsJ1 > 5) {
+    tempJeuJ1++;
+    tempPtsJ1 = 0;
+    tempPtsJ2 = 0;
+    tempStatut = 0;
+  } else if (tempPtsJ2 === 4 && tempPtsJ1 <= 2) {
+    tempJeuJ2++;
+    tempPtsJ1 = 0;
+    tempPtsJ2 = 0;
+    tempStatut = 0;
+  } else if (tempPtsJ2 > 5) {
+    tempJeuJ2++;
+    tempPtsJ1 = 0;
+    tempPtsJ2 = 0;
+    tempStatut = 0;
+  } else if (tempPtsJ1 === 4 && tempPtsJ2 === 4) {
+    tempPtsJ1 = 3;
+    tempPtsJ2 = 3;
   }
 
-  soljeuJ1 = jeuJ1;
-  soljeuJ2 = jeuJ2;
-  solptsJ1 = ptsJ1;
-  solptsJ2 = ptsJ2;
-
-  if (statut === 0) {
-    serveur = serveur === 1 ? 2 : 1;
-    solServ = 1;
-    if ((jeuJ1 + jeuJ2) % 2 === 1) {
-      solCote = 1;
+  if (tempStatut === 0) {
+    tempServeur = tempServeur === 1 ? 2 : 1;
+    tempSolServ = 1;
+    if ((tempJeuJ1 + tempJeuJ2) % 2 === 1) {
+      tempSolCote = 1;
     }
-    statut = 1;
   }
+
+  soljeuJ1 = tempJeuJ1;
+  soljeuJ2 = tempJeuJ2;
+  solptsJ1 = tempPtsJ1;
+  solptsJ2 = tempPtsJ2;
+  solServ = tempSolServ;
+  solCote = tempSolCote;
 }
 
 function majInterface() {
@@ -106,7 +127,8 @@ function verifierReponse() {
   if (repJeuJ1 === soljeuJ1 && repJeuJ2 === soljeuJ2 && repPtsJ1 === solptsJ1 && repPtsJ2 === solptsJ2) {
     msg += "✅ Score juste<br>";
   } else {
-    msg += "❌ Score incorrect<br>";
+    msg += `❌ Score incorrect<br>`;
+    msg += `Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
   }
 
   if ((repServ === "non" && solServ === 0) || (repServ === "oui" && solServ === 1)) {
