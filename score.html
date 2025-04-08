@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Score Tennis</title>
-    <link rel="stylesheet" href="score.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Score Tennis</title>
+  <link rel="stylesheet" href="score.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Score Tennis</h1>
+  <div class="container">
+    <h1 class="titre">SCORE TENNIS</h1>
 
-        <!-- Section pour afficher le score de chaque joueur -->
-        <div id="score">
-            <p>Jeu de Joueur 1: <span id="jeuJ1">0</span></p>
-            <p>Jeu de Joueur 2: <span id="jeuJ2">0</span></p>
-            <p>Points Joueur 1: <span id="scoreJ1">0</span></p>
-            <p>Points Joueur 2: <span id="scoreJ2">0</span></p>
-        </div>
+    <div class="scoreboard">
+      <div class="player">JOUEUR 1</div>
+      <div class="score-jeu" id="jeuJ1">0</div>
+      <div class="sep">-</div>
+      <div class="score-jeu" id="jeuJ2">0</div>
+      <div class="player">JOUEUR 2</div>
 
-        <!-- Affichage du serveur actuel -->
-        <div id="serveur">
-            <p id="serveurStatus">Joueur 1 sert <span id="serveurPoint">●</span></p>
-        </div>
-
-        <!-- Un bouton pour commencer un nouveau jeu -->
-        <button id="startGame">Commencer un nouveau jeu</button>
-
-        <!-- Retour au menu -->
-        <a href="index.html">Retour au menu</a>
+      <div class="points" id="points">0 - 0</div>
+      <div class="serve-indicator" id="serveJ1">●</div>
+      <div class="serve-indicator" id="serveJ2">●</div>
     </div>
 
-    <!-- Lien vers le fichier JavaScript -->
-    <script src="game.js"></script>
+    <div class="log" id="logText">Cliquez pour commencer un nouveau point.</div>
+
+    <button onclick="nouveauPoint()">🎾 Nouveau point</button>
+
+    <div class="formulaire">
+      <p>Quel est le score suivant ?</p>
+      <label>Jeux J1: <input type="number" id="rep_jeu_j1" min="0" max="5"></label>
+      <label>Jeux J2: <input type="number" id="rep_jeu_j2" min="0" max="5"></label>
+      <label>Points J1 (0/1/2/3/4/5): <input type="number" id="rep_pts_j1" min="0" max="5"></label>
+      <label>Points J2 (0/1/2/3/4/5): <input type="number" id="rep_pts_j2" min="0" max="5"></label>
+      <label>Changement de serveur ? <input type="text" id="rep_serv" placeholder="oui ou non"></label>
+      <label>Changement de côté ? <input type="text" id="rep_cote" placeholder="oui ou non"></label>
+      <button onclick="verifierReponses()">✅ Vérifier</button>
+    </div>
+
+    <div class="resultat" id="resultat"></div>
+  </div>
+
+  <script src="game.js"></script>
 </body>
 </html>
