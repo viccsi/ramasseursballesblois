@@ -136,13 +136,14 @@ function verifierReponse() {
     msg += "✅ Score juste<br>";
   } else {
     msg += `❌ Score incorrect<br>`;
-    msg += `Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
+    //msg += `Bonne réponse : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
   }
 
   if (repServ === solServ) {
     msg += "✅ Serveur correct<br>";
   } else {
-    msg += `❌ Erreur serveur – c'était le Joueur ${solServ}<br>`;
+    msg += `❌ Erreur serveur<br>`;
+    //msg += `❌ Erreur serveur – c'était le Joueur ${solServ}<br>`;
   }
 
   if (
