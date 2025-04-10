@@ -27,6 +27,8 @@ function afficherScore(pts) {
 }
 
 function genererScore() {
+  document.getElementById("resultat").innerHTML = "";
+
   jeuJ1 = Math.floor(Math.random() * 5);
   jeuJ2 = Math.floor(Math.random() * 3);
   serveur = Math.random() < 0.5 ? 1 : 2;
