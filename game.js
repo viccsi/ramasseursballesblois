@@ -159,7 +159,7 @@ function verifierReponse() {
 }
 
 function afficherCorrection() {
-  let msg = `<strong>Correction :</strong><br>`;
+  let msg = `<strong>CORRECTION :</strong><br>`;
   msg += `Score : ${soljeuJ1}-${soljeuJ2}, ${afficherScore(solptsJ1)}-${afficherScore(solptsJ2)}<br>`;
   msg += `Serveur suivant : ${solServ === 1 ? "J1" : "J2"}<br>`;
   msg += `Changement de côté : ${solCote === 1 ? "Oui" : "Non"}`;
