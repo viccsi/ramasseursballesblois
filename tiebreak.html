@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Entraînement Tie-Break</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      margin: 0;
+    }
+
+    header {
+      background-color: #ff7043;
+      color: white;
+      padding: 1rem;
+    }
+
+    .scoreboard {
+      display: flex;
+      justify-content: center;
+      margin: 2rem;
+      background-color: black;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+    }
+
+    .player {
+      margin: 0 2rem;
+    }
+
+    .player-name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .score-value {
+      font-size: 1.5rem;
+    }
+
+    .controls {
+      margin: 2rem;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      padding: 0.7em 1.5em;
+      margin: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #resultat {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    a.retour {
+      display: inline-block;
+      margin: 2em auto;
+      text-decoration: none;
+      color: #0066cc;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎾 Entraînement Tie-Break</h1>
+    <p>Apprenez à suivre le score d'un tie-break</p>
+  </header>
+
+  <div class="scoreboard">
+    <div class="player">
+      <div class="player-name">Joueur 1</div>
+      <div class="score-value" id="scoreJ1">0</div>
+    </div>
+    <div class="player">
+      <div class="player-name">Joueur 2</div>
+      <div class="score-value" id="scoreJ2">0</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="marquePoint(1)">Point pour Joueur 1</button>
+    <button onclick="marquePoint(2)">Point pour Joueur 2</button>
+    <button onclick="resetTieBreak()">🔄 Recommencer</button>
+  </div>
+
+  <div id="resultat"></div>
+
+  <a class="retour" href="index.html">← Retour au menu</a>
+
+  <script>
+    let scoreJ1 = 0;
+    let scoreJ2 = 0;
+    let serveur = 1;
+    let totalPoints = 0;
+
+    function marquePoint(joueur) {
+      if (joueur === 1) {
+        scoreJ1++;
+      } else {
+        scoreJ2++;
+      }
+      totalPoints++;
+      majAffichage();
+      verifierFin();
+    }
+
+    function majAffichage() {
+      document.getElementById("scoreJ1").innerText = scoreJ1;
+      document.getElementById("scoreJ2").innerText = scoreJ2;
+    }
+
+    function verifierFin() {
+      if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
+        document.getElementById("resultat").innerHTML = `<strong>Match terminé !</strong><br>Vainqueur : Joueur ${scoreJ1 > scoreJ2 ? "1" : "2"}`;
+      }
+    }
+
+    function resetTieBreak() {
+      scoreJ1 = 0;
+      scoreJ2 = 0;
+      totalPoints = 0;
+      document.getElementById("resultat").innerHTML = "";
+      majAffichage();
+    }
+  </script>
+</body>
+</html>
