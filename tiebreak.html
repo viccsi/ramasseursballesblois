@@ -6,10 +6,9 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
       margin: 0;
-      padding: 0;
       text-align: center;
     }
 
@@ -19,23 +18,29 @@
       padding: 1rem;
     }
 
-    h1 {
-      margin: 0.5em 0;
-    }
-
     .scoreboard {
       display: flex;
       justify-content: center;
+      gap: 5em;
+      background: #000;
+      color: #fff;
+      padding: 2em;
       margin: 2em auto;
-      background-color: #222;
-      color: white;
-      padding: 1.5em;
-      width: 300px;
-      border-radius: 10px;
+      border-radius: 12px;
+      width: fit-content;
     }
 
     .player {
-      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 120px;
+    }
+
+    .player-name {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
     }
 
     .server-dot {
@@ -85,18 +90,21 @@
 </head>
 <body>
   <header>
-    <h1>🎾 Tie-Break - Entraînement</h1>
+    <h1>🎾 Entraînement Tie-Break</h1>
+    <p>Apprenez à suivre un tie-break</p>
   </header>
 
   <div class="scoreboard">
     <div class="player">
-      <div class="serve" id="serve1">🎾</div>
-      <div>Joueur 1</div>
+      <div class="player-name" id="player1-name">
+        Joueur 1
+      </div>
       <div class="score" id="scoreJ1">0</div>
     </div>
     <div class="player">
-      <div class="serve" id="serve2" style="visibility: hidden;">🎾</div>
-      <div>Joueur 2</div>
+      <div class="player-name" id="player2-name">
+        Joueur 2
+      </div>
       <div class="score" id="scoreJ2">0</div>
     </div>
   </div>
@@ -127,9 +135,7 @@
     }
 
     function changementServeur() {
-      if (totalPoints === 1) {
-        serveur = serveur === 1 ? 2 : 1;
-      } else if (totalPoints > 1 && totalPoints % 2 === 1) {
+      if (totalPoints === 1 || (totalPoints > 1 && totalPoints % 2 === 1)) {
         serveur = serveur === 1 ? 2 : 1;
       }
     }
@@ -138,8 +144,11 @@
       document.getElementById("scoreJ1").innerText = scoreJ1;
       document.getElementById("scoreJ2").innerText = scoreJ2;
 
-      document.getElementById("serve1").style.visibility = serveur === 1 ? "visible" : "hidden";
-      document.getElementById("serve2").style.visibility = serveur === 2 ? "visible" : "hidden";
+      const name1 = document.getElementById("player1-name");
+      const name2 = document.getElementById("player2-name");
+
+      name1.innerHTML = (serveur === 1 ? '<span class="server-dot"></span>' : '') + 'Joueur 1';
+      name2.innerHTML = (serveur === 2 ? '<span class="server-dot"></span>' : '') + 'Joueur 2';
     }
 
     function verifierFin() {
