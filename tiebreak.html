@@ -26,10 +26,12 @@
       color: white;
       padding: 2rem;
       border-radius: 12px;
+      position: relative;
     }
 
     .player {
       margin: 0 2rem;
+      position: relative;
     }
 
     .player-name {
@@ -40,6 +42,15 @@
 
     .score-value {
       font-size: 1.5rem;
+    }
+
+    .serveur {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      color: yellow;
     }
 
     .controls {
@@ -57,9 +68,16 @@
       cursor: pointer;
     }
 
+    #question {
+      margin: 1em;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
     #resultat {
       margin-top: 1em;
       font-weight: bold;
+      font-size: 1.1rem;
     }
 
     a.retour {
@@ -74,19 +92,23 @@
 <body>
   <header>
     <h1>🎾 Entraînement Tie-Break</h1>
-    <p>Apprenez à suivre le score d'un tie-break</p>
+    <p>Apprenez à suivre score et serveur au tie-break</p>
   </header>
 
   <div class="scoreboard">
-    <div class="player">
+    <div class="player" id="player1">
+      <div class="serveur" id="serve1">🎯</div>
       <div class="player-name">Joueur 1</div>
       <div class="score-value" id="scoreJ1">0</div>
     </div>
-    <div class="player">
+    <div class="player" id="player2">
+      <div class="serveur" id="serve2" style="display: none;">🎯</div>
       <div class="player-name">Joueur 2</div>
       <div class="score-value" id="scoreJ2">0</div>
     </div>
   </div>
+
+  <div id="question"></div>
 
   <div class="controls">
     <button onclick="marquePoint(1)">Point pour Joueur 1</button>
@@ -101,8 +123,8 @@
   <script>
     let scoreJ1 = 0;
     let scoreJ2 = 0;
-    let serveur = 1;
     let totalPoints = 0;
+    let serveur = 1; // 1 pour joueur 1, 2 pour joueur 2
 
     function marquePoint(joueur) {
       if (joueur === 1) {
@@ -111,18 +133,32 @@
         scoreJ2++;
       }
       totalPoints++;
+      changementServeur();
       majAffichage();
       verifierFin();
+      poserQuestion();
+    }
+
+    function changementServeur() {
+      if (totalPoints === 1) {
+        serveur = serveur === 1 ? 2 : 1; // Changement après 1er point
+      } else if (totalPoints >= 2 && (totalPoints % 2 === 1)) {
+        serveur = serveur === 1 ? 2 : 1; // Ensuite tous les deux points
+      }
     }
 
     function majAffichage() {
       document.getElementById("scoreJ1").innerText = scoreJ1;
       document.getElementById("scoreJ2").innerText = scoreJ2;
+
+      document.getElementById("serve1").style.display = serveur === 1 ? "block" : "none";
+      document.getElementById("serve2").style.display = serveur === 2 ? "block" : "none";
     }
 
     function verifierFin() {
       if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
         document.getElementById("resultat").innerHTML = `<strong>Match terminé !</strong><br>Vainqueur : Joueur ${scoreJ1 > scoreJ2 ? "1" : "2"}`;
+        document.getElementById("question").innerHTML = "";
       }
     }
 
@@ -130,9 +166,33 @@
       scoreJ1 = 0;
       scoreJ2 = 0;
       totalPoints = 0;
+      serveur = 1;
       document.getElementById("resultat").innerHTML = "";
+      document.getElementById("question").innerHTML = "";
       majAffichage();
+      poserQuestion();
     }
+
+    function poserQuestion() {
+      if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) return;
+
+      let questionType = Math.floor(Math.random() * 3);
+      let texte = "";
+
+      if (questionType === 0) {
+        texte = `Qui sert ? (Joueur ${serveur})`;
+      } else if (questionType === 1) {
+        texte = `Quel est le score actuel ? (${scoreJ1}-${scoreJ2})`;
+      } else {
+        texte = `Changer de côté ? (${(totalPoints % 6 === 0) ? "OUI" : "NON"})`;
+      }
+
+      document.getElementById("question").innerHTML = texte;
+    }
+
+    window.onload = () => {
+      poserQuestion();
+    };
   </script>
 </body>
 </html>
