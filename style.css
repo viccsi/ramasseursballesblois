@@ -52,3 +52,52 @@ h1 {
   background-color: #e64a19;
   transform: scale(1.03);
 }
+
+.terrain {
+  width: 400px;
+  height: 150px;
+  background-color: #4CAF50;
+  margin: 0 auto 2em auto;
+  border: 4px solid white;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 10px #999;
+}
+
+.cote {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filet {
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  background-color: white;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.joueur {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: white;
+  position: relative;
+}
+
+.server-dot {
+  width: 12px;
+  height: 12px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
