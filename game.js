@@ -115,6 +115,8 @@ function majInterface() {
   document.getElementById("ptsJ2").innerText = afficherScore(ptsJ2);
   document.getElementById("serve1").style.display = serveur === 1 ? "inline-block" : "none";
   document.getElementById("serve2").style.display = serveur === 2 ? "inline-block" : "none";
+  document.getElementById("dotJ1").style.display = (serveur === 1) ? "inline-block" : "none";
+  document.getElementById("dotJ2").style.display = (serveur === 2) ? "inline-block" : "none";
 }
 
 function verifierReponse() {
