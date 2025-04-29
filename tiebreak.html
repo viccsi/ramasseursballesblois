@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #f5f5f5;
-      text-align: center;
       margin: 0;
+      padding: 0;
+      text-align: center;
     }
 
     header {
@@ -18,102 +19,88 @@
       padding: 1rem;
     }
 
+    h1 {
+      margin: 0.5em 0;
+    }
+
     .scoreboard {
       display: flex;
       justify-content: center;
-      margin: 2rem;
-      background-color: black;
+      margin: 2em auto;
+      background-color: #222;
       color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      position: relative;
+      padding: 1.5em;
+      width: 300px;
+      border-radius: 10px;
     }
 
     .player {
-      margin: 0 2rem;
-      position: relative;
+      flex: 1;
     }
 
-    .player-name {
+    .serve {
+      font-size: 1.2em;
+      color: gold;
+      margin-bottom: 0.5em;
+    }
+
+    .score {
+      font-size: 2em;
       font-weight: bold;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .score-value {
-      font-size: 1.5rem;
-    }
-
-    .serveur {
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.5rem;
-      color: yellow;
     }
 
     .controls {
-      margin: 2rem;
+      margin-top: 2em;
     }
 
     button {
-      background-color: #0066cc;
-      color: white;
-      padding: 0.7em 1.5em;
-      margin: 1rem;
+      padding: 10px 20px;
+      font-size: 1em;
+      margin: 0.5em;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      background-color: #0077cc;
+      color: white;
       cursor: pointer;
-    }
-
-    #question {
-      margin: 1em;
-      font-weight: bold;
-      font-size: 1.2rem;
     }
 
     #resultat {
       margin-top: 1em;
+      font-size: 1.2em;
       font-weight: bold;
-      font-size: 1.1rem;
     }
 
     a.retour {
       display: inline-block;
-      margin: 2em auto;
+      margin-top: 2em;
       text-decoration: none;
-      color: #0066cc;
       font-weight: bold;
+      color: #0077cc;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🎾 Entraînement Tie-Break</h1>
-    <p>Apprenez à suivre score et serveur au tie-break</p>
+    <h1>🎾 Tie-Break - Entraînement</h1>
   </header>
 
   <div class="scoreboard">
-    <div class="player" id="player1">
-      <div class="serveur" id="serve1">🎯</div>
-      <div class="player-name">Joueur 1</div>
-      <div class="score-value" id="scoreJ1">0</div>
+    <div class="player">
+      <div class="serve" id="serve1">🎾</div>
+      <div>Joueur 1</div>
+      <div class="score" id="scoreJ1">0</div>
     </div>
-    <div class="player" id="player2">
-      <div class="serveur" id="serve2" style="display: none;">🎯</div>
-      <div class="player-name">Joueur 2</div>
-      <div class="score-value" id="scoreJ2">0</div>
+    <div class="player">
+      <div class="serve" id="serve2" style="visibility: hidden;">🎾</div>
+      <div>Joueur 2</div>
+      <div class="score" id="scoreJ2">0</div>
     </div>
   </div>
-
-  <div id="question"></div>
 
   <div class="controls">
     <button onclick="marquePoint(1)">Point pour Joueur 1</button>
     <button onclick="marquePoint(2)">Point pour Joueur 2</button>
-    <button onclick="resetTieBreak()">🔄 Recommencer</button>
+    <button onclick="resetMatch()">🔁 Recommencer</button>
   </div>
 
   <div id="resultat"></div>
@@ -124,26 +111,22 @@
     let scoreJ1 = 0;
     let scoreJ2 = 0;
     let totalPoints = 0;
-    let serveur = 1; // 1 pour joueur 1, 2 pour joueur 2
+    let serveur = 1;
 
     function marquePoint(joueur) {
-      if (joueur === 1) {
-        scoreJ1++;
-      } else {
-        scoreJ2++;
-      }
+      if (joueur === 1) scoreJ1++;
+      else scoreJ2++;
       totalPoints++;
       changementServeur();
       majAffichage();
       verifierFin();
-      poserQuestion();
     }
 
     function changementServeur() {
       if (totalPoints === 1) {
-        serveur = serveur === 1 ? 2 : 1; // Changement après 1er point
-      } else if (totalPoints >= 2 && (totalPoints % 2 === 1)) {
-        serveur = serveur === 1 ? 2 : 1; // Ensuite tous les deux points
+        serveur = serveur === 1 ? 2 : 1;
+      } else if (totalPoints > 1 && totalPoints % 2 === 1) {
+        serveur = serveur === 1 ? 2 : 1;
       }
     }
 
@@ -151,48 +134,27 @@
       document.getElementById("scoreJ1").innerText = scoreJ1;
       document.getElementById("scoreJ2").innerText = scoreJ2;
 
-      document.getElementById("serve1").style.display = serveur === 1 ? "block" : "none";
-      document.getElementById("serve2").style.display = serveur === 2 ? "block" : "none";
+      document.getElementById("serve1").style.visibility = serveur === 1 ? "visible" : "hidden";
+      document.getElementById("serve2").style.visibility = serveur === 2 ? "visible" : "hidden";
     }
 
     function verifierFin() {
       if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
-        document.getElementById("resultat").innerHTML = `<strong>Match terminé !</strong><br>Vainqueur : Joueur ${scoreJ1 > scoreJ2 ? "1" : "2"}`;
-        document.getElementById("question").innerHTML = "";
+        const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
+        document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
       }
     }
 
-    function resetTieBreak() {
+    function resetMatch() {
       scoreJ1 = 0;
       scoreJ2 = 0;
       totalPoints = 0;
       serveur = 1;
-      document.getElementById("resultat").innerHTML = "";
-      document.getElementById("question").innerHTML = "";
+      document.getElementById("resultat").innerText = "";
       majAffichage();
-      poserQuestion();
     }
 
-    function poserQuestion() {
-      if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) return;
-
-      let questionType = Math.floor(Math.random() * 3);
-      let texte = "";
-
-      if (questionType === 0) {
-        texte = `Qui sert ? (Joueur ${serveur})`;
-      } else if (questionType === 1) {
-        texte = `Quel est le score actuel ? (${scoreJ1}-${scoreJ2})`;
-      } else {
-        texte = `Changer de côté ? (${(totalPoints % 6 === 0) ? "OUI" : "NON"})`;
-      }
-
-      document.getElementById("question").innerHTML = texte;
-    }
-
-    window.onload = () => {
-      poserQuestion();
-    };
+    window.onload = majAffichage;
   </script>
 </body>
 </html>
