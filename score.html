@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Score Tennis</title>
-  <link rel="stylesheet" href="score.css">
+  <title>Entraînement Tie-Break</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -13,14 +13,9 @@
     }
 
     header {
-      text-align: center;
-      padding: 2rem 0;
-      background-color: #ff7043; /* Orange foncé */
+      background-color: #ff7043;
       color: white;
-    }
-
-    h1 {
-      margin-top: 1em;
+      padding: 1rem;
     }
 
     .scoreboard {
@@ -58,171 +53,117 @@
       vertical-align: middle;
     }
 
-    .score-value {
-      font-size: 1.3em;
-      margin: 0.3em 0;
-    }
-
-    .reponse-board {
-      display: flex;
-      justify-content: center;
-      gap: 5em;
-      margin-bottom: 2em;
-    }
-
-    .reponse-player {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #ddd;
-      padding: 1em;
-      border-radius: 10px;
-    }
-
-    .reponse-player input,
-    .reponse-player select {
-      font-size: 1em;
-      padding: 0.4em;
-      margin: 0.3em 0;
-      width: 70px;
-      text-align: center;
-    }
-
-    .extras {
-      margin: 1em auto;
-      display: flex;
-      justify-content: center;
-      gap: 2em;
-    }
-
-    .extras label {
-      display: flex;
-      flex-direction: column;
+    .score {
+      font-size: 2em;
       font-weight: bold;
     }
 
+    .controls {
+      margin-top: 2em;
+    }
+
     button {
-      margin: 1.5em 0.5em;
-      padding: 0.7em 1.5em;
+      padding: 10px 20px;
       font-size: 1em;
-      background-color: #0066cc;
-      color: white;
+      margin: 0.5em;
       border: none;
       border-radius: 8px;
+      background-color: #0077cc;
+      color: white;
       cursor: pointer;
     }
 
     #resultat {
       margin-top: 1em;
+      font-size: 1.2em;
       font-weight: bold;
     }
 
     a.retour {
       display: inline-block;
-      margin: 2em auto;
+      margin-top: 2em;
       text-decoration: none;
-      color: #0066cc;
       font-weight: bold;
-    }
-
-    /* Nouveau CSS pour centrer le texte sous le lien */
-    .centered-text {
-      font-size: 1em; /* Taille de police normale */
-      color: #555; /* Couleur gris clair */
-      margin-top: 0.2em; /* Espacement réduit entre le texte et le lien */
-      text-align: center; /* Centrer le texte */
+      color: #0077cc;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🎾 Entraînement Score Tennis</h1>
-    <p>Apprenez à suivre le score</p>
+    <h1>🎾 Entraînement Tie-Break</h1>
+    <p>Apprenez à suivre un tie-break</p>
   </header>
 
-  <h1 id="question">Quel sera le score si le Joueur ... marque le point ?</h1>
-
-  <!-- SCORE ACTUEL -->
   <div class="scoreboard">
     <div class="player">
-      <div class="player-name"><span id="serve1" class="server-dot" style="display:none;"></span>Joueur 1</div>
-      <div class="score-value">Jeux : <span id="jeuJ1">0</span></div>
-      <div class="score-value">Points : <span id="ptsJ1">0</span></div>
+      <div class="player-name">
+        <span id="serve1" class="server-dot" style="display: none;"></span>Joueur 1
+      </div>
+      <div class="score" id="scoreJ1">0</div>
     </div>
     <div class="player">
-      <div class="player-name"><span id="serve2" class="server-dot" style="display:none;"></span>Joueur 2</div>
-      <div class="score-value">Jeux : <span id="jeuJ2">0</span></div>
-      <div class="score-value">Points : <span id="ptsJ2">0</span></div>
+      <div class="player-name">
+        <span id="serve2" class="server-dot" style="display: none;"></span>Joueur 2
+      </div>
+      <div class="score" id="scoreJ2">0</div>
     </div>
   </div>
 
-  <!-- SCORE À REMPLIR -->
-  <div class="reponse-board">
-    <div class="reponse-player">
-      <div><strong>Joueur 1</strong></div>
-      <input type="number" id="repJeuJ1" placeholder="Jeux">
-      <select id="repPtsJ1">
-        <option value="">Points</option>
-        <option value="0">0</option>
-        <option value="1">15</option>
-        <option value="2">30</option>
-        <option value="3">40</option>
-        <option value="4">/</option>
-        <option value="5">AD</option>
-      </select>
-    </div>
-
-    <div class="reponse-player">
-      <div><strong>Joueur 2</strong></div>
-      <input type="number" id="repJeuJ2" placeholder="Jeux">
-      <select id="repPtsJ2">
-        <option value="">Points</option>
-        <option value="0">0</option>
-        <option value="1">15</option>
-        <option value="2">30</option>
-        <option value="3">40</option>
-        <option value="4">/</option>
-        <option value="5">AD</option>
-      </select>
-    </div>
+  <div class="controls">
+    <button onclick="marquePoint(1)">Point pour Joueur 1</button>
+    <button onclick="marquePoint(2)">Point pour Joueur 2</button>
+    <button onclick="resetMatch()">🔁 Recommencer</button>
   </div>
-
-  <div class="extras">
-    <label>
-      Qui va servir ?
-      <select id="repServ">
-        <option value="">--</option>
-        <option value="1">J1</option>
-        <option value="2">J2</option>
-      </select>
-    </label>
-    <label>
-      Changement de côté ?
-      <select id="repCote">
-        <option value="">--</option>
-        <option value="non">Non</option>
-        <option value="oui">Oui</option>
-      </select>
-    </label>
-  </div>
-
-  <div>
-    <button onclick="genererScore()">🎲 Générer un score</button>
-    <button onclick="verifierReponse()">✅ Vérifier</button>
-    <button onclick="afficherCorrection()">📘 Correction</button>
-
-
-  </div>
-
-<!-- Nouveau lien vers la vidéo YouTube des règles -->
-<div>
-  <a class="retour" href="https://youtu.be/RzfwNPQjmbM?si=HIEi2XFNj-MrEmpH" target="_blank">🎬 Courte vidéo de rappel du comptage des scores 🎬</a>
-</div>
 
   <div id="resultat"></div>
 
   <a class="retour" href="index.html">← Retour au menu</a>
 
-  <script src="game.js"></script>
+  <script>
+    let scoreJ1 = 0;
+    let scoreJ2 = 0;
+    let totalPoints = 0;
+    let serveur = 1;
+
+    function marquePoint(joueur) {
+      if (joueur === 1) scoreJ1++;
+      else scoreJ2++;
+      totalPoints++;
+      changementServeur();
+      majAffichage();
+      verifierFin();
+    }
+
+    function changementServeur() {
+      if (totalPoints === 1 || (totalPoints > 1 && totalPoints % 2 === 1)) {
+        serveur = serveur === 1 ? 2 : 1;
+      }
+    }
+
+    function majAffichage() {
+      document.getElementById("scoreJ1").innerText = scoreJ1;
+      document.getElementById("scoreJ2").innerText = scoreJ2;
+      document.getElementById("serve1").style.display = serveur === 1 ? "inline-block" : "none";
+      document.getElementById("serve2").style.display = serveur === 2 ? "inline-block" : "none";
+    }
+
+    function verifierFin() {
+      if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
+        const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
+        document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
+      }
+    }
+
+    function resetMatch() {
+      scoreJ1 = 0;
+      scoreJ2 = 0;
+      totalPoints = 0;
+      serveur = 1;
+      document.getElementById("resultat").innerText = "";
+      majAffichage();
+    }
+
+    window.onload = majAffichage;
+  </script>
 </body>
 </html>
