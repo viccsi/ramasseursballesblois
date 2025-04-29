@@ -101,3 +101,31 @@ h1 {
   vertical-align: middle;
 }
 
+.court-container {
+  position: relative;
+  width: 400px;
+  height: 270px;
+  margin: 2em auto;
+  background: url('images/edda71ac-ca44-4227-9b2e-b75da4ed990d.png') no-repeat center;
+  background-size: contain;
+}
+
+.player-label {
+  position: absolute;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+#player-j1 {
+  top: 30px;
+  left: 150px;
+}
+
+#player-j2 {
+  bottom: 30px;
+  left: 150px;
+}
