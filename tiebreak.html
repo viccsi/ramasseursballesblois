@@ -163,10 +163,11 @@
   </div>
 
   <div class="controls">
-    <button onclick="marquePoint(1)">Point pour Joueur 1</button>
-    <button onclick="marquePoint(2)">Point pour Joueur 2</button>
+    <button id="btnJ1" onclick="marquePoint(1)">Point pour Joueur 1</button>
+    <button id="btnJ2" onclick="marquePoint(2)">Point pour Joueur 2</button>
     <button onclick="resetMatch()">🔁 Recommencer</button>
   </div>
+
 
   <div id="resultat"></div>
 
@@ -228,7 +229,9 @@
         const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
         document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
         matchTermine = true;
-        document.querySelectorAll(".controls button").forEach(btn => btn.disabled = true);
+        // Désactive uniquement les boutons de point
+        document.getElementById("btnJ1").disabled = true;
+        document.getElementById("btnJ2").disabled = true;
       }
     }
 
@@ -262,7 +265,8 @@
       if (!left.contains(p1)) left.appendChild(p1);
       if (!right.contains(p2)) right.appendChild(p2);
 
-      document.querySelectorAll(".controls button").forEach(btn => btn.disabled = false);
+      document.getElementById("btnJ1").disabled = false;
+document.getElementById("btnJ2").disabled = false;
       majAffichage();
     }
 
