@@ -148,15 +148,11 @@
     </div>
   </div>
 
-  <div class="terrain">
-    <div class="side left">
-      <div class="court-player" id="player1-court">J1</div>
-    </div>
-    <div class="net"></div>
-    <div class="side right">
-      <div class="court-player" id="player2-court">J2</div>
-    </div>
-  </div>
+  <div class="court-container">
+  <img src="images/court.jpg" alt="Terrain de tennis" class="court-image" />
+  <div class="player-label" id="player1-court">J1</div>
+  <div class="player-label" id="player2-court">J2</div>
+</div>
 
   <div id="changement-info" style="margin-top: 1em; font-weight: bold;">
     Points avant changement de côté : 6
@@ -173,7 +169,7 @@
 
   <a class="retour" href="index.html">← Retour au menu</a>
 
-  <script>
+ <script>
     let scoreJ1 = 0;
     let scoreJ2 = 0;
     let totalPoints = 0;
@@ -217,11 +213,9 @@
       name2.innerHTML = (serveur === 2 ? '<span class="server-dot"></span>' : '') + 'Joueur 2';
 
       const info = document.getElementById("changement-info");
-      if (pointsRestantsChangement === 0) {
-        info.innerText = "Changement de côté";
-      } else {
-        info.innerText = `Points avant changement de côté : ${pointsRestantsChangement}`;
-      }
+      info.innerText = pointsRestantsChangement === 0
+        ? "Changement de côté"
+        : `Points avant changement de côté : ${pointsRestantsChangement}`;
     }
 
     function verifierFin() {
@@ -229,24 +223,56 @@
         const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
         document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
         matchTermine = true;
-        // Désactive uniquement les boutons de point
         document.getElementById("btnJ1").disabled = true;
         document.getElementById("btnJ2").disabled = true;
       }
     }
 
     function switchSides() {
-      const player1 = document.getElementById('player1-court');
-      const player2 = document.getElementById('player2-court');
+      const p1 = document.getElementById('player1-court');
+      const p2 = document.getElementById('player2-court');
 
-      const parent1 = player1.parentElement;
-      const parent2 = player2.parentElement;
+      animateEllipse(p1);
+      animateEllipse(p2);
+    }
 
-      parent1.removeChild(player1);
-      parent2.removeChild(player2);
+    function animateEllipse(player) {
+      const duration = 800;
+      const centerY = 150;
+      const centerX = 300;
+      const radiusX = 120;
+      const radiusY = 70;
 
-      parent1.appendChild(player2);
-      parent2.appendChild(player1);
+      const isTop = player.style.top !== "";
+
+      let start = null;
+
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const angle = progress * Math.PI;
+
+        const x = centerX + radiusX * Math.cos(angle);
+        const y = centerY + (isTop ? -1 : 1) * radiusY * Math.sin(angle);
+
+        player.style.left = (x - player.offsetWidth / 2) + 'px';
+        player.style.top = (y - player.offsetHeight / 2) + 'px';
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          if (isTop) {
+            player.style.top = '';
+            player.style.bottom = '30px';
+          } else {
+            player.style.bottom = '';
+            player.style.top = '30px';
+          }
+        }
+      }
+
+      requestAnimationFrame(step);
     }
 
     function resetMatch() {
@@ -258,15 +284,15 @@
       matchTermine = false;
       document.getElementById("resultat").innerText = "";
 
-      const left = document.querySelector('.side.left');
-      const right = document.querySelector('.side.right');
       const p1 = document.getElementById('player1-court');
       const p2 = document.getElementById('player2-court');
-      if (!left.contains(p1)) left.appendChild(p1);
-      if (!right.contains(p2)) right.appendChild(p2);
+      p1.style.top = '30px';
+      p1.style.bottom = '';
+      p2.style.bottom = '30px';
+      p2.style.top = '';
 
       document.getElementById("btnJ1").disabled = false;
-document.getElementById("btnJ2").disabled = false;
+      document.getElementById("btnJ2").disabled = false;
       majAffichage();
     }
 
