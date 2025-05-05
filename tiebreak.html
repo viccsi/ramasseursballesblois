@@ -226,46 +226,38 @@ function switchSides() {
 
 
    
-function animateEllipseLateral(player, toLeftSide) {
-  const duration = 1000;
-  const centerY = 130;
-  const centerX = 300;
-  const radiusX = 220;
-  const radiusY = 40;
+function animateEllipseLateral(player, toLeft) {
+  const court = document.querySelector('.court');
+  const rect = court.getBoundingClientRect();
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const radiusX = rect.width / 2 - 50;
+  const radiusY = rect.height / 2 - 30;
 
-  let start = null;
+  const startAngle = toLeft ? 0 : Math.PI;
+  const endAngle = toLeft ? Math.PI : 2 * Math.PI;
 
-  function step(timestamp) {
-    if (!start) start = timestamp;
-    const elapsed = timestamp - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const angle = progress * Math.PI;
+  let frame = 0;
+  const totalFrames = 60;
 
-    // direction inversée pour aller dans l'autre sens
-    const direction = toLeftSide ? 1 : -1;
+  function animate() {
+    const t = frame / totalFrames;
+    const angle = startAngle + (endAngle - startAngle) * t;
 
-    const x = centerX + direction * radiusX * Math.cos(angle);
-    const y = centerY + radiusY * Math.sin(angle);
+    const x = centerX + radiusX * Math.cos(angle) - player.offsetWidth / 2;
+    const y = centerY + radiusY * Math.sin(angle) - player.offsetHeight / 2;
 
-    player.style.left = (x - player.offsetWidth / 2) + 'px';
-    player.style.top = (y - player.offsetHeight / 2) + 'px';
+    player.style.position = 'absolute';
+    player.style.left = `${x}px`;
+    player.style.top = `${y}px`;
 
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    } else {
-      // Remet les positions finales nettes
-      player.style.top = centerY - player.offsetHeight / 2 + 'px';
-      if (toLeftSide) {
-        player.style.left = '80px';
-        player.style.right = '';
-      } else {
-        player.style.right = '80px';
-        player.style.left = '';
-      }
+    frame++;
+    if (frame <= totalFrames) {
+      requestAnimationFrame(animate);
     }
   }
 
-  requestAnimationFrame(step);
+  animate();
 }
 
 
