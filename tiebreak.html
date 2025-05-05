@@ -228,52 +228,61 @@
       }
     }
 
-    function switchSides() {
-      const p1 = document.getElementById('player1-court');
-      const p2 = document.getElementById('player2-court');
+function switchSides() {
+  const p1 = document.getElementById('player1-court');
+  const p2 = document.getElementById('player2-court');
 
-      animateEllipse(p1);
-      animateEllipse(p2);
-    }
+  const p1GoingLeft = p2.style.left !== ''; // s’il était à droite, il va à gauche
+  const p2GoingLeft = p1.style.right !== ''; // s’il était à gauche, il va à droite
 
-    function animateEllipse(player) {
-      const duration = 800;
-      const centerY = 150;
-      const centerX = 300;
-      const radiusX = 120;
-      const radiusY = 70;
+  animateEllipseLateral(p1, p1GoingLeft);
+  animateEllipseLateral(p2, p2GoingLeft);
+}
 
-      const isTop = player.style.top !== "";
 
-      let start = null;
+   
+function animateEllipseLateral(player, toLeftSide) {
+  const duration = 1000;
+  const centerY = 130;
+  const centerX = 300;
+  const radiusX = 220;
+  const radiusY = 40;
 
-      function step(timestamp) {
-        if (!start) start = timestamp;
-        const elapsed = timestamp - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const angle = progress * Math.PI;
+  let start = null;
 
-        const x = centerX + radiusX * Math.cos(angle);
-        const y = centerY + (isTop ? -1 : 1) * radiusY * Math.sin(angle);
+  function step(timestamp) {
+    if (!start) start = timestamp;
+    const elapsed = timestamp - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const angle = progress * Math.PI;
 
-        player.style.left = (x - player.offsetWidth / 2) + 'px';
-        player.style.top = (y - player.offsetHeight / 2) + 'px';
+    // direction inversée pour aller dans l'autre sens
+    const direction = toLeftSide ? 1 : -1;
 
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        } else {
-          if (isTop) {
-            player.style.top = '';
-            player.style.bottom = '30px';
-          } else {
-            player.style.bottom = '';
-            player.style.top = '30px';
-          }
-        }
-      }
+    const x = centerX + direction * radiusX * Math.cos(angle);
+    const y = centerY + radiusY * Math.sin(angle);
 
+    player.style.left = (x - player.offsetWidth / 2) + 'px';
+    player.style.top = (y - player.offsetHeight / 2) + 'px';
+
+    if (progress < 1) {
       requestAnimationFrame(step);
+    } else {
+      // Remet les positions finales nettes
+      player.style.top = centerY - player.offsetHeight / 2 + 'px';
+      if (toLeftSide) {
+        player.style.left = '80px';
+        player.style.right = '';
+      } else {
+        player.style.right = '80px';
+        player.style.left = '';
+      }
     }
+  }
+
+  requestAnimationFrame(step);
+}
+
 
     function resetMatch() {
       scoreJ1 = 0;
