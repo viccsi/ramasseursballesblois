@@ -119,23 +119,9 @@
   </div>
 </div>
 
-
-  <div class="terrain">
-  <div class="cote gauche">
-    <div class="joueur" id="joueur-gauche">
-      <span class="server-dot" id="dotJ1" style="display: none;"></span>
-      J1
-    </div>
-  </div>
-  <div class="filet"></div>
-  <div class="cote droite">
-    <div class="joueur" id="joueur-droite">
-      <span class="server-dot" id="dotJ2" style="display: none;"></span>
-      J2
-    </div>
-  </div>
+<div id="changement-info" style="margin-top: 1em; font-weight: bold;">
+  Points avant changement de côté : 6
 </div>
-
 
   <div class="controls">
     <button onclick="marquePoint(1)">Point pour Joueur 1</button>
@@ -152,19 +138,22 @@
   let scoreJ2 = 0;
   let totalPoints = 0;
   let serveur = 1;
+  let pointsRestantsChangement = 6;
 
   function marquePoint(joueur) {
     if (joueur === 1) scoreJ1++;
     else scoreJ2++;
 
     totalPoints++;
+    pointsRestantsChangement--;
+
     changementServeur();
     majAffichage();
     verifierFin();
 
-    // Changement de côté tous les 6 points
-    if (totalPoints % 6 === 0) {
+    if (pointsRestantsChangement === 0) {
       switchSides();
+      pointsRestantsChangement = 6;
     }
   }
 
@@ -183,6 +172,9 @@
 
     name1.innerHTML = (serveur === 1 ? '<span class="server-dot"></span>' : '') + 'Joueur 1';
     name2.innerHTML = (serveur === 2 ? '<span class="server-dot"></span>' : '') + 'Joueur 2';
+
+    document.getElementById("changement-info").innerText =
+      `Points avant changement de côté : ${pointsRestantsChangement}`;
   }
 
   function verifierFin() {
@@ -211,9 +203,10 @@
     scoreJ2 = 0;
     totalPoints = 0;
     serveur = 1;
+    pointsRestantsChangement = 6;
     document.getElementById("resultat").innerText = "";
 
-    // Remet les joueurs sur leur côté d'origine
+    // Remise à la position initiale
     const left = document.querySelector('.side.left');
     const right = document.querySelector('.side.right');
     const p1 = document.getElementById('player1-court');
@@ -226,6 +219,7 @@
 
   window.onload = majAffichage;
 </script>
+
 
 </body>
 </html>
