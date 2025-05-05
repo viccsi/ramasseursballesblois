@@ -109,6 +109,17 @@
     </div>
   </div>
 
+  <div id="court">
+  <div class="side left">
+    <div class="player" id="player1-court">J1</div>
+  </div>
+  <div class="net"></div>
+  <div class="side right">
+    <div class="player" id="player2-court">J2</div>
+  </div>
+</div>
+
+
   <div class="terrain">
   <div class="cote gauche">
     <div class="joueur" id="joueur-gauche">
@@ -136,55 +147,85 @@
 
   <a class="retour" href="index.html">← Retour au menu</a>
 
-  <script>
-    let scoreJ1 = 0;
-    let scoreJ2 = 0;
-    let totalPoints = 0;
-    let serveur = 1;
+<script>
+  let scoreJ1 = 0;
+  let scoreJ2 = 0;
+  let totalPoints = 0;
+  let serveur = 1;
 
-    function marquePoint(joueur) {
-      if (joueur === 1) scoreJ1++;
-      else scoreJ2++;
-      totalPoints++;
-      changementServeur();
-      majAffichage();
-      verifierFin();
+  function marquePoint(joueur) {
+    if (joueur === 1) scoreJ1++;
+    else scoreJ2++;
+
+    totalPoints++;
+    changementServeur();
+    majAffichage();
+    verifierFin();
+
+    // Changement de côté tous les 6 points
+    if (totalPoints % 6 === 0) {
+      switchSides();
     }
+  }
 
-    function changementServeur() {
-      if (totalPoints === 1 || (totalPoints > 1 && totalPoints % 2 === 1)) {
-        serveur = serveur === 1 ? 2 : 1;
-      }
+  function changementServeur() {
+    if (totalPoints === 1 || (totalPoints > 1 && totalPoints % 2 === 1)) {
+      serveur = serveur === 1 ? 2 : 1;
     }
+  }
 
-    function majAffichage() {
-      document.getElementById("scoreJ1").innerText = scoreJ1;
-      document.getElementById("scoreJ2").innerText = scoreJ2;
+  function majAffichage() {
+    document.getElementById("scoreJ1").innerText = scoreJ1;
+    document.getElementById("scoreJ2").innerText = scoreJ2;
 
-      const name1 = document.getElementById("player1-name");
-      const name2 = document.getElementById("player2-name");
+    const name1 = document.getElementById("player1-name");
+    const name2 = document.getElementById("player2-name");
 
-      name1.innerHTML = (serveur === 1 ? '<span class="server-dot"></span>' : '') + 'Joueur 1';
-      name2.innerHTML = (serveur === 2 ? '<span class="server-dot"></span>' : '') + 'Joueur 2';
+    name1.innerHTML = (serveur === 1 ? '<span class="server-dot"></span>' : '') + 'Joueur 1';
+    name2.innerHTML = (serveur === 2 ? '<span class="server-dot"></span>' : '') + 'Joueur 2';
+  }
+
+  function verifierFin() {
+    if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
+      const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
+      document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
     }
+  }
 
-    function verifierFin() {
-      if ((scoreJ1 >= 7 || scoreJ2 >= 7) && Math.abs(scoreJ1 - scoreJ2) >= 2) {
-        const gagnant = scoreJ1 > scoreJ2 ? "Joueur 1" : "Joueur 2";
-        document.getElementById("resultat").innerText = `${gagnant} remporte le tie-break !`;
-      }
-    }
+  function switchSides() {
+    const player1 = document.getElementById('player1-court');
+    const player2 = document.getElementById('player2-court');
 
-    function resetMatch() {
-      scoreJ1 = 0;
-      scoreJ2 = 0;
-      totalPoints = 0;
-      serveur = 1;
-      document.getElementById("resultat").innerText = "";
-      majAffichage();
-    }
+    const parent1 = player1.parentElement;
+    const parent2 = player2.parentElement;
 
-    window.onload = majAffichage;
-  </script>
+    parent1.removeChild(player1);
+    parent2.removeChild(player2);
+
+    parent1.appendChild(player2);
+    parent2.appendChild(player1);
+  }
+
+  function resetMatch() {
+    scoreJ1 = 0;
+    scoreJ2 = 0;
+    totalPoints = 0;
+    serveur = 1;
+    document.getElementById("resultat").innerText = "";
+
+    // Remet les joueurs sur leur côté d'origine
+    const left = document.querySelector('.side.left');
+    const right = document.querySelector('.side.right');
+    const p1 = document.getElementById('player1-court');
+    const p2 = document.getElementById('player2-court');
+    if (!left.contains(p1)) left.appendChild(p1);
+    if (!right.contains(p2)) right.appendChild(p2);
+
+    majAffichage();
+  }
+
+  window.onload = majAffichage;
+</script>
+
 </body>
 </html>
