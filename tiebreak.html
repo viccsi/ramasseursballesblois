@@ -215,71 +215,51 @@
 function switchSides() {
   const p1 = document.getElementById('player1-court');
   const p2 = document.getElementById('player2-court');
-
-  const p1GoingLeft = p2.style.left !== ''; // s’il était à droite, il va à gauche
-  const p2GoingLeft = p1.style.right !== ''; // s’il était à gauche, il va à droite
-
-  animateEllipseLateral(p1, p1GoingLeft);
-  animateEllipseLateral(p2, p2GoingLeft);
-}
-
-
-   
-function animateEllipseLateral(player, toLeft) {
   const court = document.querySelector('.court');
-  const rect = court.getBoundingClientRect();
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const radiusX = rect.width / 2 - 50;
-  const radiusY = rect.height / 2 - 30;
+  const courtRect = court.getBoundingClientRect();
 
-  const startAngle = toLeft ? 0 : Math.PI;
-  const endAngle = toLeft ? Math.PI : 2 * Math.PI;
+  const p1Rect = p1.getBoundingClientRect();
+  const p2Rect = p2.getBoundingClientRect();
 
-  let frame = 0;
-  const totalFrames = 60;
+  const p1NewLeft = p2Rect.left - courtRect.left;
+  const p1NewTop = p2Rect.top - courtRect.top;
+  const p2NewLeft = p1Rect.left - courtRect.left;
+  const p2NewTop = p1Rect.top - courtRect.top;
 
-  function animate() {
-    const t = frame / totalFrames;
-    const angle = startAngle + (endAngle - startAngle) * t;
+  p1.style.position = 'absolute';
+  p2.style.position = 'absolute';
 
-    const x = centerX + radiusX * Math.cos(angle) - player.offsetWidth / 2;
-    const y = centerY + radiusY * Math.sin(angle) - player.offsetHeight / 2;
-
-    player.style.position = 'absolute';
-    player.style.left = `${x}px`;
-    player.style.top = `${y}px`;
-
-    frame++;
-    if (frame <= totalFrames) {
-      requestAnimationFrame(animate);
-    }
-  }
-
-  animate();
+  p1.style.left = `${p1NewLeft}px`;
+  p1.style.top = `${p1NewTop}px`;
+  p2.style.left = `${p2NewLeft}px`;
+  p2.style.top = `${p2NewTop}px`;
 }
 
 
-    function resetMatch() {
-      scoreJ1 = 0;
-      scoreJ2 = 0;
-      totalPoints = 0;
-      serveur = 1;
-      pointsRestantsChangement = 6;
-      matchTermine = false;
-      document.getElementById("resultat").innerText = "";
+function resetMatch() {
+  scoreJ1 = 0;
+  scoreJ2 = 0;
+  totalPoints = 0;
+  serveur = 1;
+  pointsRestantsChangement = 6;
+  matchTermine = false;
+  document.getElementById("resultat").innerText = "";
 
-      const p1 = document.getElementById('player1-court');
-      const p2 = document.getElementById('player2-court');
-      p1.style.top = '30px';
-      p1.style.bottom = '';
-      p2.style.bottom = '30px';
-      p2.style.top = '';
+  const p1 = document.getElementById('player1-court');
+  const p2 = document.getElementById('player2-court');
 
-      document.getElementById("btnJ1").disabled = false;
-      document.getElementById("btnJ2").disabled = false;
-      majAffichage();
-    }
+  p1.style.position = 'absolute';
+  p2.style.position = 'absolute';
+
+  p1.style.left = '40px';
+  p1.style.top = '80px';
+  p2.style.left = '320px';
+  p2.style.top = '80px';
+
+  document.getElementById("btnJ1").disabled = false;
+  document.getElementById("btnJ2").disabled = false;
+  majAffichage();
+}
 
     window.onload = majAffichage;
   </script>
