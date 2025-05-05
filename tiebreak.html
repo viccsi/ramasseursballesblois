@@ -215,24 +215,18 @@
 function switchSides() {
   const p1 = document.getElementById('player1-court');
   const p2 = document.getElementById('player2-court');
-  const court = document.querySelector('.court');
-  const courtRect = court.getBoundingClientRect();
 
-  const p1Rect = p1.getBoundingClientRect();
-  const p2Rect = p2.getBoundingClientRect();
+  // Sauvegarde les positions actuelles
+  const p1Left = p1.style.left;
+  const p1Top = p1.style.top;
+  const p2Left = p2.style.left;
+  const p2Top = p2.style.top;
 
-  const p1NewLeft = p2Rect.left - courtRect.left;
-  const p1NewTop = p2Rect.top - courtRect.top;
-  const p2NewLeft = p1Rect.left - courtRect.left;
-  const p2NewTop = p1Rect.top - courtRect.top;
-
-  p1.style.position = 'absolute';
-  p2.style.position = 'absolute';
-
-  p1.style.left = `${p1NewLeft}px`;
-  p1.style.top = `${p1NewTop}px`;
-  p2.style.left = `${p2NewLeft}px`;
-  p2.style.top = `${p2NewTop}px`;
+  // Échange les positions
+  p1.style.left = p2Left;
+  p1.style.top = p2Top;
+  p2.style.left = p1Left;
+  p2.style.top = p1Top;
 }
 
 
