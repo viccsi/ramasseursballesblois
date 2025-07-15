@@ -136,3 +136,33 @@ h1 {
   top: 130px;
   left: 320px;
 }
+
+/*Pour la galerie*/
+.galerie-ligne {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.galerie-ligne figure {
+  flex: 1 1 300px;
+  text-align: center;
+  margin: 0;
+}
+
+.galerie-ligne img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.galerie-ligne figcaption {
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+  color: #333;
+}
+
