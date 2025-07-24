@@ -203,6 +203,14 @@ h1 {
   padding: 2rem;
 }
 
+.galerie-ligne img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 .galerie-ligne figure {
   flex: 1 1 300px;
   text-align: center;
@@ -215,12 +223,5 @@ h1 {
   color: #333;
 }
 
-.galerie-ligne img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
 
 
