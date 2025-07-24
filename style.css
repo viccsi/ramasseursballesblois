@@ -197,7 +197,7 @@ h1 {
 /*Pour la galerie*/
 .galerie-ligne {
   display: flex;
-  flex-wrap: wrap;             /* Permet de revenir à la ligne si besoin */
+  /*flex-wrap: wrap;             /* Permet de revenir à la ligne si besoin */*/
   justify-content: center;     /* Centre les éléments */
   gap: 2rem;                   /* Espace entre les figures */
   padding: 2rem;
