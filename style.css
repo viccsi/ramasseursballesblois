@@ -152,41 +152,6 @@ h1 {
 
 /::::::::::::::::::::::::::::::::::::/
 /*Pour les videos*/
-.video-gallery {
-  display: flex;                    /* disposition en ligne */
-  flex-wrap: wrap;                 /* permet le retour à la ligne */
-  justify-content: center;         /* centre horizontalement */
-  gap: 2rem;                        /* espace entre les vidéos */
-  max-width: 1000px;               /* limite la largeur totale */
-  margin: 0 auto;                  /* centre la galerie sur la page */
-}
-
-.video-thumb {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  text-align: center;
-  width: 300px;                    /* taille fixe pour 3 par ligne */
-  box-sizing: border-box;
-}
-
-.video-thumb img {
-  width: 100%;                     /* l’image prend toute la largeur du bloc */
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.video-thumb img:hover {
-  transform: scale(1.05);          /* petit effet au survol */
-}
-
-.video-thumb p {
-  margin-top: 0.8rem;
-  font-size: 1rem;
-  color: #333;
-  font-weight: bold;
-}
 
 
 
