@@ -204,14 +204,14 @@ h1 {
 }
 
 .galerie-ligne figure {
-  width: 30%;
   flex: 1 1 300px;
   text-align: center;
   margin: 0;
 }
 
 .galerie-ligne img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 400px;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
